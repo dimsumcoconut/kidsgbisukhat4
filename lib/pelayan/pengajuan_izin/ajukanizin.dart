@@ -6,6 +6,9 @@ import 'package:kidsgbisukhat4/admin/Jadwal/Minggu%204/tugasminggu4_screen.dart'
 import 'package:kidsgbisukhat4/admin/Jadwal/Minggu%205/tugasminggu5.dart';
 import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu1/izin_minggu1.dart';
 import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu2/izin2.dart';
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu3/izin3.dart';
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu4/izin4.dart';
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu5/izin5.dart';
 
 class AjukanIzin extends StatefulWidget {
   const AjukanIzin({super.key});
@@ -97,7 +100,7 @@ class _AjukanIzinState extends State<AjukanIzin> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const TugasMinggu3()));
+                            builder: (context) => const Izin3()));
                   },
                   child: Container(
                     width: double.infinity,
@@ -126,7 +129,7 @@ class _AjukanIzinState extends State<AjukanIzin> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const TugasMinggu4Screen()));
+                            builder: (context) => const Izin4()));
                   },
                   child: Container(
                     width: double.infinity,
@@ -155,7 +158,7 @@ class _AjukanIzinState extends State<AjukanIzin> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const TugasMinggu5()));
+                            builder: (context) => const Izin5()));
                   },
                   child: Container(
                     width: double.infinity,

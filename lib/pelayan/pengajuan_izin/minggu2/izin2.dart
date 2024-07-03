@@ -11,6 +11,7 @@ class Izin2 extends StatefulWidget {
   @override
   State<Izin2> createState() => _Izin2State();
 }
+
 class _Izin2State extends State<Izin2> {
   final _formKey = GlobalKey<FormState>();
   final tanggalController = TextEditingController();
@@ -38,6 +39,7 @@ class _Izin2State extends State<Izin2> {
       try {
         await MyFirebase.izin2Collection.add({
           'nama': namaController.text.trim(),
+          'tanggal': tanggalController.text.trim(),
           'alasan': alasanControler.text.trim(),
           'status': "0",
         });
@@ -93,6 +95,21 @@ class _Izin2State extends State<Izin2> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  controller: tanggalController,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.text,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Harap  diisi";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Tanggal: (01 Januari 2024)",
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
                   controller: alasanControler,
                   keyboardType: TextInputType.text,
                   validator: (value) {
@@ -108,8 +125,7 @@ class _Izin2State extends State<Izin2> {
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton(
-                    onPressed: 
-                    addPengajuan, child: const Text("Ajukan Izin")),
+                    onPressed: addPengajuan, child: const Text("Ajukan Izin")),
               ],
             ),
           ),

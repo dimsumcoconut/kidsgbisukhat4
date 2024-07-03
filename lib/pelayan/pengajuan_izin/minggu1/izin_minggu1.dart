@@ -39,6 +39,7 @@ class _IzinMinggu1State extends State<IzinMinggu1> {
       try {
         await MyFirebase.izin1Collection.add({
           'nama': namaController.text.trim(),
+          'tanggal': tanggalController.text.trim(),
           'alasan': alasanControler.text.trim(),
           'status': "0",
         });
@@ -91,6 +92,21 @@ class _IzinMinggu1State extends State<IzinMinggu1> {
                   enabled: false,
                   textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: tanggalController,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.text,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Harap  diisi";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Tanggal: (01 Januari 2024)",
+                  ),
                 ),
                 const SizedBox(height: 20),
                 TextFormField(

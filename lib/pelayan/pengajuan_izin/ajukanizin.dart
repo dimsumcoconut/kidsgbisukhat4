@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kidsgbisukhat4/admin/Jadwal/Minggu%201/tugasminggu1.dart';
-import 'package:kidsgbisukhat4/admin/Jadwal/Minggu%202/tugasminggu2.dart';
-import 'package:kidsgbisukhat4/admin/Jadwal/Minggu%203/tugasminggu3_screen.dart';
-import 'package:kidsgbisukhat4/admin/Jadwal/Minggu%204/tugasminggu4_screen.dart';
-import 'package:kidsgbisukhat4/admin/Jadwal/Minggu%205/tugasminggu5.dart';
-import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu1/izin_minggu1.dart';
-import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu2/izin2.dart';
-import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu3/izin3.dart';
-import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu4/izin4.dart';
-import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu5/izin5.dart';
+// import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/daftarpengajuan.dart';
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu1/daftarpengajuan1.dart';
+
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu2/daftarpengajuan2.dart';
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu3/daftarpengajuan3.dart';
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu4/daftarpengajuan4.dart';
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu5/daftarpengajuan5.dart';
 
 class AjukanIzin extends StatefulWidget {
   const AjukanIzin({super.key});
@@ -23,7 +20,7 @@ class _AjukanIzinState extends State<AjukanIzin> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Ajukan Izin",
+          "Pengajuan Izin",
           style: TextStyle(
             fontSize: 20,
           ),
@@ -39,10 +36,8 @@ class _AjukanIzinState extends State<AjukanIzin> {
                 padding: const EdgeInsets.only(left: 15),
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const IzinMinggu1()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const DPI1()));
                   },
                   child: Container(
                     width: double.infinity,
@@ -68,10 +63,8 @@ class _AjukanIzinState extends State<AjukanIzin> {
                 padding: const EdgeInsets.only(left: 15),
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Izin2()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const DP2()));
                   },
                   child: Container(
                     width: double.infinity,
@@ -97,10 +90,8 @@ class _AjukanIzinState extends State<AjukanIzin> {
                 padding: const EdgeInsets.only(left: 15),
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Izin3()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const DP3()));
                   },
                   child: Container(
                     width: double.infinity,
@@ -126,10 +117,8 @@ class _AjukanIzinState extends State<AjukanIzin> {
                 padding: const EdgeInsets.only(left: 15),
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Izin4()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const DP4()));
                   },
                   child: Container(
                     width: double.infinity,
@@ -155,10 +144,8 @@ class _AjukanIzinState extends State<AjukanIzin> {
                 padding: const EdgeInsets.only(left: 15),
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Izin5()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const DP5()));
                   },
                   child: Container(
                     width: double.infinity,

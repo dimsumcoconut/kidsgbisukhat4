@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kidsgbisukhat4/pelayan/Berita/berita_page.dart';
-import 'package:kidsgbisukhat4/pelayan/penagjuan_izin/daftarpengajuan.dart';
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/ajukanizin.dart';
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/daftarpengajuan.dart';
 import 'package:kidsgbisukhat4/pelayan/jadwalpelayanan.dart';
 import 'package:kidsgbisukhat4/pelayan/unduhbahan.dart';
 import 'package:kidsgbisukhat4/screen/loginscreen.dart';
@@ -167,7 +168,7 @@ class _PelayanDashboardState extends State<PelayanDashboard> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DaftarPengajuan()));
+                          builder: (context) => const AjukanIzin()));
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),

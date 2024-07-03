@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kidsgbisukhat4/pelayan/Berita/berita_page.dart';
-import 'package:kidsgbisukhat4/pelayan/penagjuan_izin/daftarpengajuan.dart';
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/daftarpengajuan.dart';
 import 'package:kidsgbisukhat4/pelayan/jadwalpelayanan.dart';
 import 'package:kidsgbisukhat4/pelayan/unduhbahan.dart';
 

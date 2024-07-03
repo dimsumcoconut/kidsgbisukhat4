@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kidsgbisukhat4/pelayan/my_firebase.dart';
-import 'package:kidsgbisukhat4/pelayan/penagjuan_izin/pengajuan.dart';
+import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/pengajuan.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DaftarPengajuan extends StatefulWidget {

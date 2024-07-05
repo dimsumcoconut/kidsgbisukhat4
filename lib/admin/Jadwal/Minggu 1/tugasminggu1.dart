@@ -112,13 +112,13 @@ class _TugasMinggu1State extends State<TugasMinggu1> {
                       .collection('minggu1')
                       .doc('jadwal1')
                       .set({
-                    "WL": "-",
-                    "Singer": "-",
-                    "Firman Kecil": "-",
-                    "Firman Besar": "-",
-                    "Multimedia": "-",
-                    "Usher": "-",
-                    "Doa": "-",
+                    // "WL": "-",
+                    // "Singer": "-",
+                    // "Firman Kecil": "-",
+                    // "Firman Besar": "-",
+                    // "Multimedia": "-",
+                    // "Usher": "-",
+                    // "Doa": "-",
                   });
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

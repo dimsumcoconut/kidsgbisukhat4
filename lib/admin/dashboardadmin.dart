@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kidsgbisukhat4/admin/Bahan/bahan.dart';
 import 'package:kidsgbisukhat4/admin/Berita/berita_screen.dart';
+import 'package:kidsgbisukhat4/admin/Daftar%20Izin/daftar_izin.dart';
 import 'package:kidsgbisukhat4/admin/DataPelayan/data_guru.dart';
 import 'package:kidsgbisukhat4/admin/Jadwal/buatjadwal.dart';
 import 'package:kidsgbisukhat4/admin/Daftar%20Izin/daftarizin.dart';
@@ -190,7 +191,7 @@ class _DashboardAdmin extends State<DashboardAdmin> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const DaftarIzin()));
+                            builder: (context) => const Daftar_Izin()));
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),

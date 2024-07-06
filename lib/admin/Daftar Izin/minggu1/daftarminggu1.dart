@@ -15,6 +15,16 @@ class _DI1State extends State<DI1> {
 
   final izinSnapshot = MyFirebase.izin1Collection.snapshots();
 
+  void deleteIzin(String id) async {
+    await MyFirebase.izin1Collection.doc(id).delete();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Daftar dihapus'),
+        backgroundColor: const Color.fromARGB(255, 99, 99, 99),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +54,8 @@ class _DI1State extends State<DI1> {
                 itemCount: documents.length,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
+                  final contactId = documents[index].id;
+
                   final izin = documents[index].data() as Map<String, dynamic>;
                   final String nama = izin['nama'];
                   final String tanggal = izin['tanggal'];
@@ -124,6 +136,13 @@ class _DI1State extends State<DI1> {
                           },
                           splashRadius: 24,
                           icon: const Icon(Icons.close),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            deleteIzin(contactId);
+                          },
+                          splashRadius: 24,
+                          icon: const Icon(Icons.delete),
                         ),
                       ],
                     ),

@@ -191,7 +191,7 @@ class _DashboardAdmin extends State<DashboardAdmin> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Daftar_Izin()));
+                            builder: (context) => const DaftarIzin()));
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),

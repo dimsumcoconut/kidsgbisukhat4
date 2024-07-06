@@ -77,16 +77,6 @@ class _DaftarIzinState extends State<DaftarIzin> {
                               'status': "1",
                             });
 
-                            FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(documents[index].id)
-                                .set({
-                              'tanggal': tanggal,
-                              'nama': nama,
-                              'alasan': alasan,
-                              'status': "Tidak Aktif",
-                            });
-
                             // ScaffoldMessenger.of(context).showSnackBar(
                             //   SnackBar(
                             //     content:
@@ -110,17 +100,7 @@ class _DaftarIzinState extends State<DaftarIzin> {
                               'alasan': alasan,
                               'status': "2",
                             });
-
-                            FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(documents[index].id)
-                                .set({
-                              'tanggal': tanggal,
-                              'nama': nama,
-                              'alasan': alasan,
-                              'status': "Aktif",
-                            });
-                          },
+                            },
                           splashRadius: 24,
                           icon: const Icon(Icons.close),
                         ),

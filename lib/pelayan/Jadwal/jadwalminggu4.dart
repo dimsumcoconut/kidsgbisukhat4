@@ -1,19 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class TugasMinggu4 extends StatefulWidget {
-  const TugasMinggu4({super.key});
+class JadwalMinggu4 extends StatefulWidget {
+  const JadwalMinggu4({super.key});
 
   @override
-  State<TugasMinggu4> createState() => _TugasMinggu4State();
+  State<JadwalMinggu4> createState() => _JadwalMinggu4State();
 }
 
-class _TugasMinggu4State extends State<TugasMinggu4> {
-  final Stream<QuerySnapshot> minggu4Stream =
+class _JadwalMinggu4State extends State<JadwalMinggu4> {
+  final Stream<QuerySnapshot> minggu5Stream =
       FirebaseFirestore.instance.collection('minggu4').snapshots();
 
-  final CollectionReference jadwalCollection =
-      FirebaseFirestore.instance.collection('jadwal');
   @override
   void initState() {
     // TODO: implement initState
@@ -24,6 +22,9 @@ class _TugasMinggu4State extends State<TugasMinggu4> {
 
   final CollectionReference tugasCollection =
       FirebaseFirestore.instance.collection('tugas_pel');
+
+  final CollectionReference jadwalCollection =
+      FirebaseFirestore.instance.collection('minggu4');
 
   allData() async {
     await jadwalCollection.get().then((value) => value.docs.map((e) {
@@ -46,14 +47,6 @@ class _TugasMinggu4State extends State<TugasMinggu4> {
         }).toList());
   }
 
-  // allData() async {
-  //   await jadwalCollection.doc('minggu4').get().then((value) => print(value));
-
-    // await jadwalCollection.get().then((value) => value.docs.map((e) {
-    //       print(e.id);
-    //     }).toList());
-  // }
-
   List<String> jadwal = [];
   List<String> posisi = [];
 
@@ -66,21 +59,25 @@ class _TugasMinggu4State extends State<TugasMinggu4> {
             )
           : Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: ListView.builder(
-                itemBuilder: (context, index) => ListTile(
-                  title: Text(
-                    "${posisi[index]}: ",
-                    style: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text("${jadwal[index]}"),
+              child: StreamBuilder<Object>(
+                  stream: minggu5Stream,
+                  builder: (context, snapshot) {
+                    return ListView.builder(
+                      itemBuilder: (context, index) => ListTile(
+                        title: Text(
+                          "${posisi[index]}: ",
+                          style: const TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text("${jadwal[index]}"),
 
-                  // title: Text("${posisi[index]}: ${jadwal[index]}"),
-                ),
-                itemCount: jadwal.length > posisi.length
-                    ? posisi.length
-                    : jadwal.length,
-              ),
+                        // title: Text("${posisi[index]}: ${jadwal[index]}"),
+                      ),
+                      itemCount: jadwal.length > posisi.length
+                          ? posisi.length
+                          : jadwal.length,
+                    );
+                  }),
             ),
     );
   }

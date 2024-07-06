@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kidsgbisukhat4/admin/Jadwal/Minggu%203/minggu_3.dart';
 import 'package:kidsgbisukhat4/admin/Jadwal/Minggu%205/minggu_5.dart';
-import 'package:kidsgbisukhat4/admin/Jadwal/Minggu%205/my_firebase.dart';
 
 class TugasMinggu5 extends StatefulWidget {
   const TugasMinggu5({Key? key}) : super(key: key);
@@ -52,14 +52,6 @@ class _TugasMinggu5State extends State<TugasMinggu5> {
   List<String> jadwal = [];
   List<String> posisi = [];
 
-  Future<void> _delete(String jadwal5) async {
-    await jadwalCollection.doc(jadwal5).delete();
-
-    // for snackBar
-    ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("You have successfully deleted a itmes")));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +86,7 @@ class _TugasMinggu5State extends State<TugasMinggu5> {
             ),
       bottomSheet: Container(
         height: 60,
-        color: Colors.white,
+        color: Color.fromARGB(255, 255, 255, 255),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,15 +112,7 @@ class _TugasMinggu5State extends State<TugasMinggu5> {
                   FirebaseFirestore.instance
                       .collection('minggu5')
                       .doc('jadwal5')
-                      .set({
-                    // "WL": "-",
-                    // "Singer": "-",
-                    // "Firman Kecil": "-",
-                    // "Firman Besar": "-",
-                    // "Multimedia": "-",
-                    // "Usher": "-",
-                    // "Doa": "-",
-                  });
+                      .set({});
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: const Text('Jadwal berhasil dihapus'),

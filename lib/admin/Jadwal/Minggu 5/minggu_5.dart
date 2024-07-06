@@ -1,5 +1,14 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+class Izin {
+  final String? nama;
+  final String? status;
+
+  Izin({this.nama = "", this.status = ""});
+}
 
 class Minggu5 extends StatefulWidget {
   const Minggu5({Key? key}) : super(key: key);
@@ -20,17 +29,29 @@ class _Minggu5State extends State<Minggu5> {
   final CollectionReference tugasCollection =
       FirebaseFirestore.instance.collection('tugas_pel');
 
+  final CollectionReference izinCollection =
+      FirebaseFirestore.instance.collection('izin5');
+
   // Future<List<String>> alluser () async {
   //   List <String> data = await usersCollection.get().then((value) => value.docs.map((e) => print(e)).toList());
 
   // }
+
+  void izinMinggu5() async {
+    await izinCollection.get().then((value) => value.docs.map((e) {
+          izin.add(Izin(nama: e['nama'], status: e['status']));
+        }).toList());
+    print(izin);
+  }
+
   alluser() async {
     await usersCollection.get().then((value) => value.docs.map((e) {
           if (e['jabatan'] != 'Admin') {
-            _nama.add(e['nama']);
+            nama.add(e['nama']);
             setState(() {});
           }
         }).toList());
+    print(nama);
   }
 
   alltugas() async {
@@ -38,6 +59,7 @@ class _Minggu5State extends State<Minggu5> {
           posisi.add(e['tugas']);
           setState(() {});
         }).toList());
+    print(posisi);
   }
 
   @override
@@ -45,10 +67,35 @@ class _Minggu5State extends State<Minggu5> {
     super.initState();
     alluser();
     alltugas();
+    izinMinggu5();
   }
 
-  final List<String> _nama = [];
+  List<String> nama = [];
   final List<String> posisi = [];
+  final List<Izin> izin = [];
+
+  void gantiUserIzin(List<String> user, List<Izin> izin) {
+    List<String> userUpdated = List.from(user);
+    Random random = Random();
+
+    for (var item in izin) {
+      if (item.status == "1") {
+        // Temukan indeks user yang izin
+        int index = userUpdated.indexOf(item.nama!);
+        if (index != -1) {
+          // Buat daftar user yang bisa dipilih sebagai pengganti (kecuali yang izin)
+          List<String> candidates = List.from(user)..remove(item.nama);
+          // Pilih user pengganti secara acak
+          String replacement = candidates[random.nextInt(candidates.length)];
+          // Ganti user yang izin dengan user pengganti
+          userUpdated[index] = replacement;
+        }
+      }
+    }
+    setState(() {
+      nama = userUpdated;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +122,12 @@ class _Minggu5State extends State<Minggu5> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: ListView.builder(
-                    itemCount: _nama.length > posisi.length
+                    itemCount: nama.length > posisi.length
                         ? posisi.length
-                        : _nama.length,
+                        : nama.length,
                     itemBuilder: (context, index) => ListTile(
                       title: Text(posisi[index]),
-                      subtitle: Text(_nama[index]),
+                      subtitle: Text(nama[index]),
                     ),
                   ));
             }
@@ -107,13 +154,13 @@ class _Minggu5State extends State<Minggu5> {
                       .collection('minggu5')
                       .doc('jadwal5')
                       .set({
-                    "WL": _nama[0],
-                    "Singer": _nama[1],
-                    "Firman Kecil": _nama[2],
-                    "Firman Besar": _nama[3],
-                    "Multimedia": _nama[4],
-                    "Usher": _nama[5],
-                    "Doa": _nama[6],
+                    "WL": nama[0],
+                    "Singer": nama[1],
+                    "Firman Kecil": nama[2],
+                    "Firman Besar": nama[3],
+                    "Multimedia": nama[4],
+                    "Usher": nama[5],
+                    "Doa": nama[6],
                   });
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -132,8 +179,9 @@ class _Minggu5State extends State<Minggu5> {
             ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    _nama.shuffle();
+                    nama.shuffle();
                   });
+                  gantiUserIzin(nama, izin);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
@@ -148,3 +196,4 @@ class _Minggu5State extends State<Minggu5> {
     );
   }
 }
+

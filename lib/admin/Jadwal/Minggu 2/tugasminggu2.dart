@@ -11,7 +11,7 @@ class TugasMinggu2 extends StatefulWidget {
 
 class _TugasMinggu2State extends State<TugasMinggu2> {
   final Stream<QuerySnapshot> minggu5Stream =
-      FirebaseFirestore.instance.collection('minggu2').snapshots();
+      FirebaseFirestore.instance.collection('Minggu2').snapshots();
 
   @override
   void initState() {

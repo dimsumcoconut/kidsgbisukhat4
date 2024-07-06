@@ -4,9 +4,6 @@ import 'package:kidsgbisukhat4/admin/Daftar%20Izin/minggu2/daftarminggu2.dart';
 import 'package:kidsgbisukhat4/admin/Daftar%20Izin/minggu3/daftarminggu3.dart';
 import 'package:kidsgbisukhat4/admin/Daftar%20Izin/minggu4/daftarminggu4.dart';
 import 'package:kidsgbisukhat4/admin/Daftar%20Izin/minggu5/daftarminggu5.dart';
-// import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/daftarpengajuan.dart';
-
-import 'package:kidsgbisukhat4/pelayan/pengajuan_izin/minggu5/daftarpengajuan5.dart';
 
 class Daftar_Izin extends StatefulWidget {
   const Daftar_Izin({super.key});

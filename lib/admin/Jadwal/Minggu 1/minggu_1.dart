@@ -30,7 +30,7 @@ class _Minggu1State extends State<Minggu1> {
       FirebaseFirestore.instance.collection('tugas_pel');
 
   final CollectionReference izinCollection =
-      FirebaseFirestore.instance.collection('izin');
+      FirebaseFirestore.instance.collection('izin1');
 
   // Future<List<String>> alluser () async {
   //   List <String> data = await usersCollection.get().then((value) => value.docs.map((e) => print(e)).toList());

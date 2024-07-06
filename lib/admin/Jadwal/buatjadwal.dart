@@ -124,7 +124,7 @@ class _BuatJadwalState extends State<BuatJadwal> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const TugasMinggu4Screen()));
+                            builder: (context) => const TugasMinggu4()));
                   },
                   child: Container(
                     width: double.infinity,

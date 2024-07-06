@@ -15,6 +15,16 @@ class _DI4State extends State<DI4> {
 
   final izinSnapshot = MyFirebase.izin4Collection.snapshots();
 
+  void deleteIzin(String id) async {
+    await MyFirebase.izin4Collection.doc(id).delete();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Daftar dihapus'),
+        backgroundColor: const Color.fromARGB(255, 99, 99, 99),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +54,7 @@ class _DI4State extends State<DI4> {
                 itemCount: documents.length,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
+                  final contactId = documents[index].id;
                   final izin = documents[index].data() as Map<String, dynamic>;
                   final String nama = izin['nama'];
                   final String tanggal = izin['tanggal'];
@@ -53,8 +64,6 @@ class _DI4State extends State<DI4> {
                       : izin['status'] == "1"
                           ? "Disetujui"
                           : "Tidak Disetujui";
-
-                  // documents[index].id;
 
                   return ListTile(
                     onTap: () {},
@@ -77,25 +86,6 @@ class _DI4State extends State<DI4> {
                               'alasan': alasan,
                               'status': "1",
                             });
-
-                            // FirebaseFirestore.instance
-                            //     .collection('users')
-                            //     .doc(documents[index].id)
-                            //     .set({
-                            //   'tanggal': tanggal,
-                            //   'nama': nama,
-                            //   'alasan': alasan,
-                            //   'status': "Tidak Aktif",
-                            // });
-
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   SnackBar(
-                            //     content:
-                            //         const Text('Berhasil tidak disetujui'),
-                            //     backgroundColor:
-                            //         const Color.fromARGB(255, 99, 99, 99),
-                            //   ),
-                            // );
                           },
                           splashRadius: 24,
                           icon: const Icon(Icons.check),
@@ -111,19 +101,16 @@ class _DI4State extends State<DI4> {
                               'alasan': alasan,
                               'status': "2",
                             });
-
-                            // FirebaseFirestore.instance
-                            //     .collection('users')
-                            //     .doc(documents[index].id)
-                            //     .set({
-                            //   'tanggal': tanggal,
-                            //   'nama': nama,
-                            //   'alasan': alasan,
-                            //   'status': "Aktif",
-                            // });
                           },
                           splashRadius: 24,
                           icon: const Icon(Icons.close),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            deleteIzin(contactId);
+                          },
+                          splashRadius: 24,
+                          icon: const Icon(Icons.delete),
                         ),
                       ],
                     ),

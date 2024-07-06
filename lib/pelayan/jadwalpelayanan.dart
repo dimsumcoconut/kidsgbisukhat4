@@ -137,7 +137,7 @@ class _JadwalPelayananState extends State<JadwalPelayanan>
                       JadwalMinggu1(),
                       JadwalMinggu2(),
                       JadwalMinggu3(),
-                      TugasMinggu4(),
+                      JadwalMinggu4(),
                       JadwalMinggu5(),
                     ]),
                   )

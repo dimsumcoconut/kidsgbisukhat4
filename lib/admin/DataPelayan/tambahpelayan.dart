@@ -196,41 +196,41 @@ class _TambahDataPelayan extends State<TambahDataPelayan> {
                       onChanged: (value) {},
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 19),
-                    child: Row(
-                      children: [
-                        const Text(
-                          "Status: ",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        DropdownButton<String>(
-                          items: options.map((String dropDownStringItem) {
-                            return DropdownMenuItem(
-                              value: dropDownStringItem,
-                              child: Text(
-                                dropDownStringItem,
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (newValueSelected) {
-                            setState(() {
-                              _currentItemSelected = newValueSelected!;
-                              status = newValueSelected;
-                            });
-                          },
-                          value: _currentItemSelected,
-                          icon: const Icon(Icons.arrow_drop_down),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // const SizedBox(height: 10),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 19),
+                  //   child: Row(
+                  //     children: [
+                  //       const Text(
+                  //         "Status: ",
+                  //         style: TextStyle(
+                  //           fontSize: 20,
+                  //           fontWeight: FontWeight.bold,
+                  //           color: Colors.black,
+                  //         ),
+                  //       ),
+                  //       const SizedBox(width: 20),
+                  //       DropdownButton<String>(
+                  //         items: options.map((String dropDownStringItem) {
+                  //           return DropdownMenuItem(
+                  //             value: dropDownStringItem,
+                  //             child: Text(
+                  //               dropDownStringItem,
+                  //             ),
+                  //           );
+                  //         }).toList(),
+                  //         onChanged: (newValueSelected) {
+                  //           setState(() {
+                  //             _currentItemSelected = newValueSelected!;
+                  //             status = newValueSelected;
+                  //           });
+                  //         },
+                  //         value: _currentItemSelected,
+                  //         icon: const Icon(Icons.arrow_drop_down),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
 
                   const SizedBox(height: 30),
                   Row(

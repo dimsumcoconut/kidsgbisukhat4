@@ -239,11 +239,11 @@ class _LogInScreenState extends State<LogInScreen> {
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        if (documentSnapshot.get('jabatan') == "Guru") {
+        if (documentSnapshot.get('jabatan') == "Admin") {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const PelayanDashboard(
+              builder: (context) => const DashboardAdmin(
                   // nama: documentSnapshot.get('nama'),
                   ),
             ),
@@ -252,7 +252,7 @@ class _LogInScreenState extends State<LogInScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const DashboardAdmin(),
+              builder: (context) => const PelayanDashboard(),
             ),
           );
         }
@@ -284,17 +284,17 @@ class _LogInScreenState extends State<LogInScreen> {
         print(prefs.getString('userPref'));
         print(jsonDecode(prefs.getString('userPref')!)['nama']);
         // route();
-        if (jsonDecode(prefs.getString('userPref')!)['jabatan'] == 'Guru') {
+        if (jsonDecode(prefs.getString('userPref')!)['jabatan'] == 'Admin') {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => PelayanDashboard(),
+                builder: (context) => DashboardAdmin(),
               ));
         } else {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => DashboardAdmin(),
+                builder: (context) => PelayanDashboard(),
               ));
         }
       } on FirebaseAuthException catch (e) {

@@ -169,7 +169,7 @@ class _Tambah extends State<Tambah> {
                       onChanged: (value) {},
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.only(left: 19),
                     child: Row(
@@ -177,8 +177,7 @@ class _Tambah extends State<Tambah> {
                         const Text(
                           "Jabatan: ",
                           style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
                             color: Colors.black,
                           ),
                         ),
@@ -189,6 +188,10 @@ class _Tambah extends State<Tambah> {
                               value: dropDownStringItem,
                               child: Text(
                                 dropDownStringItem,
+                                 style: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
                               ),
                             );
                           }).toList(),
@@ -216,8 +219,8 @@ class _Tambah extends State<Tambah> {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 setState(() {
-                                  signUp(email.text, password.text,
-                                       nama.text, jabatan);
+                                  signUp(email.text, password.text, nama.text,
+                                      jabatan);
                                   clearText();
                                 });
                               }
@@ -278,8 +281,8 @@ class _Tambah extends State<Tambah> {
     );
   }
 
-  void signUp(String email, String password, String nama,
-      String jabatan) async {
+  void signUp(
+      String email, String password, String nama, String jabatan) async {
     const CircularProgressIndicator();
     if (_formKey.currentState!.validate()) {
       await auth
@@ -294,8 +297,8 @@ class _Tambah extends State<Tambah> {
     }
   }
 
-  postDetailsToFirestore(String email, String password,
-      String nama, String jabatan) async {
+  postDetailsToFirestore(
+      String email, String password, String nama, String jabatan) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = auth.currentUser;
 

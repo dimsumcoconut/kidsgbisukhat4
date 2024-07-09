@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kidsgbisukhat4/admin/DataPelayan/lihat_guru.dart';
-import 'package:kidsgbisukhat4/admin/DataPelayan/my_firebase.dart';
-import 'package:kidsgbisukhat4/admin/DataPelayan/tambahpelayan.dart';
+import 'package:kidsgbisukhat4/admin/DataPelayan/my_firebase.dart'; 
+import 'package:kidsgbisukhat4/admin/DataPelayan/tambahdata.dart';
 
 class DataGuru extends StatefulWidget {
   const DataGuru({Key? key}) : super(key: key);
@@ -114,7 +114,7 @@ class _DataGuruState extends State<DataGuru> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const TambahDataPelayan()),
+            MaterialPageRoute(builder: (context) => const Tambah()),
           );
         },
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),

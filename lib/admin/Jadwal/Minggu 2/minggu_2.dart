@@ -46,7 +46,7 @@ class _Minggu2State extends State<Minggu2> {
 
   alluser() async {
     await usersCollection.get().then((value) => value.docs.map((e) {
-          if (e['jabatan'] != 'Admin') {
+          if (e['jabatan'] == 'Guru') {
             nama.add(e['nama']);
             setState(() {});
           }
@@ -196,4 +196,3 @@ class _Minggu2State extends State<Minggu2> {
     );
   }
 }
-

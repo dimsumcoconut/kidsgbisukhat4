@@ -44,9 +44,9 @@ class _Minggu1State extends State<Minggu1> {
     print(izin);
   }
 
-  alluser() async {
+    alluser() async {
     await usersCollection.get().then((value) => value.docs.map((e) {
-          if (e['jabatan'] != 'Admin') {
+          if (e['jabatan'] == 'Guru') {
             nama.add(e['nama']);
             setState(() {});
           }

@@ -12,10 +12,16 @@ class DataGuru extends StatefulWidget {
 }
 
 class _DataGuruState extends State<DataGuru> {
+   final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
+
   final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
       .collection('users')
       .where('jabatan', isEqualTo: 'Guru')
       .snapshots();
+
+
+
   void deleteContact(String id) async {
     await MyFirebase.usersCollection.doc(id).delete();
     ScaffoldMessenger.of(context).showSnackBar(

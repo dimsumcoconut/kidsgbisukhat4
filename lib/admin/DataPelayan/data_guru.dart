@@ -17,7 +17,7 @@ class _DataGuruState extends State<DataGuru> {
 
   final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
       .collection('users')
-      .where('jabatan', isEqualTo: 'Guru')
+      .where('jabatan', isNotEqualTo: 'Admin')
       .snapshots();
 
 

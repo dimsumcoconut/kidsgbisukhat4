@@ -188,10 +188,10 @@ class _Tambah extends State<Tambah> {
                               value: dropDownStringItem,
                               child: Text(
                                 dropDownStringItem,
-                                 style: const TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
                               ),
                             );
                           }).toList(),
@@ -285,15 +285,41 @@ class _Tambah extends State<Tambah> {
       String email, String password, String nama, String jabatan) async {
     const CircularProgressIndicator();
     if (_formKey.currentState!.validate()) {
-      await auth
-          .createUserWithEmailAndPassword(
-            email: email,
-            password: password,
-          )
-          .then((value) =>
-              {postDetailsToFirestore(email, password, nama, jabatan)})
-          // ignore: body_might_complete_normally_catch_error
-          .catchError((e) {});
+      try {
+        await auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((value) =>
+                {postDetailsToFirestore(email, password, nama, jabatan)})
+            .catchError((e) {});
+      } on FirebaseAuthException catch (e) {
+        String message = '';
+        if (e.code == 'weak password') {
+          message = 'Password minimal 6 karakter.';
+        }
+        // else if (e.code == 'wrong-password') {
+        //   message = 'Password salah.';
+        // }
+        else {
+          message = 'Email sudah terdaftar';
+        }
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(message),
+          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+          // duration: const Duration(seconds: 1),
+        ));
+      }
+      // catch (e) {
+      //   print(e);
+      // }
+      // await auth
+      //     .createUserWithEmailAndPassword(
+      //       email: email,
+      //       password: password,
+      //     )
+      //     .then((value) =>
+      //         {postDetailsToFirestore(email, password, nama, jabatan)})
+      //     // ignore: body_might_complete_normally_catch_error
+      //     .catchError((e) {});
     }
   }
 

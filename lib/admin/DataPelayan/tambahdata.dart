@@ -308,9 +308,9 @@ class _Tambah extends State<Tambah> {
           // duration: const Duration(seconds: 1),
         ));
       }
-      // catch (e) {
-      //   print(e);
-      // }
+      catch (e) {
+        print(e);
+      }
       // await auth
       //     .createUserWithEmailAndPassword(
       //       email: email,

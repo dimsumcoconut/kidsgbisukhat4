@@ -13,7 +13,7 @@ class Tambah extends StatefulWidget {
 }
 
 class _Tambah extends State<Tambah> {
-  final List<String> data = ['Guru'];
+  final List<String> data = ['Guru', 'Asisten'];
   String selecteditem = 'Guru';
 
   _Tambah();
@@ -21,9 +21,7 @@ class _Tambah extends State<Tambah> {
   bool showProgress = false;
   bool visible = false;
   File? file;
-  var options = [
-    'Guru',
-  ];
+  var options = ['Guru', 'Asisten'];
   var _currentItemSelected = "Guru";
   var jabatan = "Guru";
 
@@ -140,15 +138,6 @@ class _Tambah extends State<Tambah> {
                     child: TextFormField(
                       controller: password,
                       decoration: InputDecoration(
-                          // suffixIcon: IconButton(
-                          //     icon: Icon(_isObscure
-                          //         ? Icons.visibility_off
-                          //         : Icons.visibility),
-                          //     onPressed: () {
-                          // setState(() {
-                          //   _isObscure = !_isObscure;
-                          // });
-                          //     }),
                           labelText: 'Tanggal Lahir',
                           hintText: 'DDMMYYYY',
                           border: OutlineInputBorder(
@@ -285,6 +274,7 @@ class _Tambah extends State<Tambah> {
       String email, String password, String nama, String jabatan) async {
     const CircularProgressIndicator();
     if (_formKey.currentState!.validate()) {
+      String message = '';
       try {
         await auth
             .createUserWithEmailAndPassword(email: email, password: password)
@@ -292,34 +282,19 @@ class _Tambah extends State<Tambah> {
                 {postDetailsToFirestore(email, password, nama, jabatan)})
             .catchError((e) {});
       } on FirebaseAuthException catch (e) {
-        String message = '';
-        if (e.code == 'weak password') {
-          message = 'Password minimal 6 karakter.';
+        if (e.code == 'weak-password') {
+          message = 'The password provided is too weak.';
+        } else if (e.code == 'email-already-in-use') {
+          message = 'The account already exists for that email.';
         }
-        // else if (e.code == 'wrong-password') {
-        //   message = 'Password salah.';
-        // }
-        else {
-          message = 'Email sudah terdaftar';
-        }
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(message),
-          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-          // duration: const Duration(seconds: 1),
-        ));
+      } catch (e) {
+        message = "Email sudah pernah didaftarkan, silakan gunakan email lain.";
       }
-      catch (e) {
-        print(e);
-      }
-      // await auth
-      //     .createUserWithEmailAndPassword(
-      //       email: email,
-      //       password: password,
-      //     )
-      //     .then((value) =>
-      //         {postDetailsToFirestore(email, password, nama, jabatan)})
-      //     // ignore: body_might_complete_normally_catch_error
-      //     .catchError((e) {});
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(message),
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        // duration: const Duration(seconds: 1),
+      ));
     }
   }
 

@@ -83,6 +83,14 @@ class _PelayanDashboardState extends State<PelayanDashboard> {
                     ),
                     Text(
                       // ignore: prefer_interpolation_to_compose_strings
+                      dataUser['jabatan'],
+                      style: const TextStyle(
+                          fontSize: 15,
+                          fontFamily: "One",
+                          color: Colors.black),
+                    ),
+                    Text(
+                      // ignore: prefer_interpolation_to_compose_strings
                       "Email: " + dataUser['email'],
                       style: const TextStyle(
                           fontSize: 15,

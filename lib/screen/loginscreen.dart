@@ -306,7 +306,7 @@ class _LogInScreenState extends State<LogInScreen> {
         } else {
           message = 'Email atau password salah.';
         }
-        ;
+
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(message),
           backgroundColor: const Color.fromARGB(255, 0, 0, 0),

@@ -13,7 +13,7 @@ class Tambah extends StatefulWidget {
 }
 
 class _Tambah extends State<Tambah> {
-  final List<String> data = ['Guru', 'Asisten'];
+  final List<String> data = ['Guru'];
   String selecteditem = 'Guru';
 
   _Tambah();
@@ -21,7 +21,7 @@ class _Tambah extends State<Tambah> {
   bool showProgress = false;
   bool visible = false;
   File? file;
-  var options = ['Guru', 'Asisten'];
+  var options = ['Guru'];
   var _currentItemSelected = "Guru";
   var jabatan = "Guru";
 
@@ -274,7 +274,7 @@ class _Tambah extends State<Tambah> {
       String email, String password, String nama, String jabatan) async {
     const CircularProgressIndicator();
     if (_formKey.currentState!.validate()) {
-      String message = '';
+      String message = 'Berhasil ditambahkan.';
       try {
         await auth
             .createUserWithEmailAndPassword(email: email, password: password)

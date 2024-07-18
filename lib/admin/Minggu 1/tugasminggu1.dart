@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kidsgbisukhat4/admin/Jadwal/Minggu%203/minggu_3.dart';
+import 'package:kidsgbisukhat4/admin/Minggu%201/minggu_1.dart';
 
-class TugasMinggu3 extends StatefulWidget {
-  const TugasMinggu3({Key? key}) : super(key: key);
+class TugasMinggu1 extends StatefulWidget {
+  const TugasMinggu1({super.key});
 
   @override
-  State<TugasMinggu3> createState() => _TugasMinggu3State();
+  State<TugasMinggu1> createState() => _TugasMinggu1State();
 }
 
-class _TugasMinggu3State extends State<TugasMinggu3> {
-  final Stream<QuerySnapshot> minggu5Stream =
-      FirebaseFirestore.instance.collection('minggu3').snapshots();
+class _TugasMinggu1State extends State<TugasMinggu1> {
+  final Stream<QuerySnapshot> minggu1Stream =
+      FirebaseFirestore.instance.collection('minggu1').snapshots();
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _TugasMinggu3State extends State<TugasMinggu3> {
       FirebaseFirestore.instance.collection('tugas_pel');
 
   final CollectionReference jadwalCollection =
-      FirebaseFirestore.instance.collection('minggu3');
+      FirebaseFirestore.instance.collection('minggu1');
 
   allData() async {
     await jadwalCollection.get().then((value) => value.docs.map((e) {
@@ -55,7 +55,7 @@ class _TugasMinggu3State extends State<TugasMinggu3> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Jadwal Minggu 3"),
+        title: const Text("Jadwal Minggu 1"),
       ),
       body: jadwal.isEmpty
           ? const Center(
@@ -64,7 +64,7 @@ class _TugasMinggu3State extends State<TugasMinggu3> {
           : Padding(
               padding: const EdgeInsets.only(left: 10),
               child: StreamBuilder<Object>(
-                  stream: minggu5Stream,
+                  stream: minggu1Stream,
                   builder: (context, snapshot) {
                     return ListView.builder(
                       itemBuilder: (context, index) => ListTile(
@@ -94,7 +94,7 @@ class _TugasMinggu3State extends State<TugasMinggu3> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Minggu3()),
+                    MaterialPageRoute(builder: (context) => const Minggu1()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -109,8 +109,8 @@ class _TugasMinggu3State extends State<TugasMinggu3> {
                   // jadwal.removeAt(index);
                   // posisi.removeAt(index);
                   FirebaseFirestore.instance
-                      .collection('minggu3')
-                      .doc('jadwal3')
+                      .collection('minggu1')
+                      .doc('jadwal1')
                       .set({
                     // "WL": "-",
                     // "Singer": "-",

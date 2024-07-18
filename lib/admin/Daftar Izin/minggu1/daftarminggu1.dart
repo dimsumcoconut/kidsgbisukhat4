@@ -65,9 +65,6 @@ class _DI1State extends State<DI1> {
                       : izin['status'] == "1"
                           ? "Disetujui"
                           : "Tidak Disetujui";
-
-                  // documents[index].id;
-
                   return ListTile(
                     onTap: () {},
                     title: Text("$nama",
@@ -89,25 +86,6 @@ class _DI1State extends State<DI1> {
                               'alasan': alasan,
                               'status': "1",
                             });
-
-                            // FirebaseFirestore.instance
-                            //     .collection('users')
-                            //     .doc(documents[index].id)
-                            //     .set({
-                            //   'tanggal': tanggal,
-                            //   'nama': nama,
-                            //   'alasan': alasan,
-                            //   'status': "Tidak Aktif",
-                            // });
-
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   SnackBar(
-                            //     content:
-                            //         const Text('Berhasil tidak disetujui'),
-                            //     backgroundColor:
-                            //         const Color.fromARGB(255, 99, 99, 99),
-                            //   ),
-                            // );
                           },
                           splashRadius: 24,
                           icon: const Icon(Icons.check),
@@ -123,16 +101,6 @@ class _DI1State extends State<DI1> {
                               'alasan': alasan,
                               'status': "2",
                             });
-
-                            // FirebaseFirestore.instance
-                            //     .collection('users')
-                            //     .doc(documents[index].id)
-                            //     .set({
-                            //   'tanggal': tanggal,
-                            //   'nama': nama,
-                            //   'alasan': alasan,
-                            //   'status': "Aktif",
-                            // });
                           },
                           splashRadius: 24,
                           icon: const Icon(Icons.close),

@@ -2,145 +2,73 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:kidsgbisukhat4/controller/jadwal1_controller.dart';
 
-class Izin {
-  final String? nama;
-  final String? status;
-
-  Izin({this.nama = "", this.status = ""});
-}
-
-class Minggu1 extends StatefulWidget {
-  const Minggu1({Key? key}) : super(key: key);
-
-  @override
-  State<Minggu1> createState() => _Minggu1State();
-}
-
-class _Minggu1State extends State<Minggu1> {
-  final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
-      .collection('users')
-      .where('jabatan', isEqualTo: 'Guru')
-      .snapshots();
-
-  final CollectionReference usersCollection =
-      FirebaseFirestore.instance.collection('users');
-
-  final CollectionReference tugasCollection =
-      FirebaseFirestore.instance.collection('tugas_pel');
-
-  final CollectionReference izinCollection =
-      FirebaseFirestore.instance.collection('izin1');
-
-  // Future<List<String>> alluser () async {
-  //   List <String> data = await usersCollection.get().then((value) => value.docs.map((e) => print(e)).toList());
-
-  // }
-
-  void izinMinggu1() async {
-    await izinCollection.get().then((value) => value.docs.map((e) {
-          izin.add(Izin(nama: e['nama'], status: e['status']));
-        }).toList());
-    print(izin);
-  }
-
-    alluser() async {
-    await usersCollection.get().then((value) => value.docs.map((e) {
-          if (e['jabatan'] == 'Guru') {
-            nama.add(e['nama']);
-            setState(() {});
-          }
-        }).toList());
-    print(nama);
-  }
-
-  alltugas() async {
-    await tugasCollection.get().then((value) => value.docs.map((e) {
-          posisi.add(e['tugas']);
-          setState(() {});
-        }).toList());
-    print(posisi);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    alluser();
-    alltugas();
-    izinMinggu1();
-  }
-
-  List<String> nama = [];
-  final List<String> posisi = [];
-  final List<Izin> izin = [];
-
-  void gantiUserIzin(List<String> user, List<Izin> izin) {
-    List<String> userUpdated = List.from(user);
-    Random random = Random();
-
-    for (var item in izin) {
-      if (item.status == "1") {
-        // Temukan indeks user yang izin
-        int index = userUpdated.indexOf(item.nama!);
-        if (index != -1) {
-          // Buat daftar user yang bisa dipilih sebagai pengganti (kecuali yang izin)
-          List<String> candidates = List.from(user)..remove(item.nama);
-          // Pilih user pengganti secara acak
-          String replacement = candidates[random.nextInt(candidates.length)];
-          // Ganti user yang izin dengan user pengganti
-          userUpdated[index] = replacement;
-        }
-      }
-    }
-    setState(() {
-      nama = userUpdated;
-    });
-  }
+class Minggu1 extends StatelessWidget {
+  Minggu1({super.key});
+  final Jadwal1Controller controller = Get.put(Jadwal1Controller());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text("Minggu 1",
-            style: TextStyle(
-              fontSize: 20,
-            )),
-        centerTitle: false,
+        title: Text('Minggu 1'),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-          stream: _usersStream,
-          builder: (BuildContext context, snapshot) {
-            if (snapshot.hasData) {
-              final List<QueryDocumentSnapshot> documents = snapshot.data!.docs;
-              if (documents.isEmpty) {
-                return const Center();
-              }
-              return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: ListView.builder(
-                    itemCount: nama.length > posisi.length
-                        ? posisi.length
-                        : nama.length,
-                    itemBuilder: (context, index) => ListTile(
-                      title: Text(posisi[index]),
-                      subtitle: Text(nama[index]),
-                    ),
-                  ));
-            }
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text("An Error Occured"),
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
-          }),
+        return Column(
+          children: [
+            ElevatedButton(
+              onPressed: () async {
+                DateTime? picked = await showDatePicker(
+                  context: context,
+                  initialDate: controller.selectedDate.value,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                );
+                if (picked != null && picked != controller.selectedDate.value) {
+                  controller.selectedDate.value = picked;
+                }
+              },
+              child: Text("Pilih Tanggal"),
+            ),
+            Obx(() => Text(
+                "Tanggal terpilih: ${DateFormat('dd MMMM yyyy', 'id_ID').format(controller.selectedDate.value)}")),
+            Expanded(
+                child: Obx(
+              () => ListView.builder(
+                itemCount: controller.assignedUser.value.length >
+                        controller.posisi.value.length
+                    ? controller.posisi.value.length
+                    : controller.assignedUser.value.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(controller.posisi.value[index]),
+                    subtitle: Text(controller.assignedUser.value[index]),
+                  );
+                },
+              ),
+            )),
+            ElevatedButton(
+              onPressed: () {
+                controller.uploadSchedule();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+              ),
+              child: const Text(
+                "Upload",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ],
+        );
+      }),
       bottomSheet: Container(
         height: 60,
         color: Color.fromARGB(255, 255, 255, 255),
@@ -150,24 +78,7 @@ class _Minggu1State extends State<Minggu1> {
           children: <Widget>[
             ElevatedButton(
                 onPressed: () {
-                  FirebaseFirestore.instance
-                      .collection('minggu1')
-                      .doc('jadwal1')
-                      .set({
-                    "WL": nama[0],
-                    "Singer": nama[1],
-                    "Firman Kecil": nama[2],
-                    "Firman Besar": nama[3],
-                    "Multimedia": nama[4],
-                    "Usher": nama[5],
-                    "Doa": nama[6],
-                  });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: const Text('Jadwal berhasil di-upload'),
-                      backgroundColor: const Color.fromARGB(255, 99, 99, 99),
-                    ),
-                  );
+                  controller.uploadSchedule();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
@@ -178,10 +89,7 @@ class _Minggu1State extends State<Minggu1> {
                 )),
             ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    nama.shuffle();
-                  });
-                  gantiUserIzin(nama, izin);
+                  controller.assignRandomUsers();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
@@ -196,4 +104,3 @@ class _Minggu1State extends State<Minggu1> {
     );
   }
 }
-

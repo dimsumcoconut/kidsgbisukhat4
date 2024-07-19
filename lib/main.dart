@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:kidsgbisukhat4/admin/dashboardadmin.dart';
 import 'package:kidsgbisukhat4/pelayan/dashboard_pelayan_screen.dart';
 import 'package:kidsgbisukhat4/screen/loginscreen.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting();
   await Firebase.initializeApp(
       options: const FirebaseOptions(
           apiKey: "AIzaSyBdcLg1jOLr-u7b6GzvFgDJkwQ-yPwU3hw",
@@ -52,12 +54,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.light(),
-      home:
-      isLogin
+      home: isLogin
           ? dataUser['jabatan'] == 'Admin'
               ? const DashboardAdmin()
-              :  const PelayanDashboard() :
-              const LogInScreen(),
+              : const PelayanDashboard()
+          : const LogInScreen(),
     );
   }
 }

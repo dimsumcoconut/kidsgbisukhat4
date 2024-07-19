@@ -94,7 +94,7 @@ class _TugasMinggu1State extends State<TugasMinggu1> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Minggu1()),
+                    MaterialPageRoute(builder: (context) => Minggu1()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

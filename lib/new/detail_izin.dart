@@ -68,8 +68,11 @@ class _DetailIzinPageState extends State<DetailIzinPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Izin'),
-        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.black,
+        title: const Text("Detail Izin",
+            style: TextStyle(fontSize: 20, color: Colors.white)
+            ),
       ),
       body: Form(
         key: formKey,

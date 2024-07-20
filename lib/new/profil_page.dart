@@ -7,7 +7,7 @@ import 'package:kidsgbisukhat4/new/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({super.key, required user});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -51,24 +51,16 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Profile Page'),
+        elevation: 0,
+        backgroundColor: Colors.black,
+        title: const Text("Profil",
+            style: TextStyle(fontSize: 20, color: Colors.white)
+            ),
+        centerTitle: false,
       ),
       body: Column(
         children: [
-          const SizedBox(width: 100, height: 100, child: FlutterLogo()),
-          ListTile(
-            onTap: () {},
-            title: const Text('Edit Profile'),
-            trailing: const Icon(Icons.arrow_forward_ios_rounded),
-          ),
-          ListTile(
-              onTap: () {},
-              title: const Text('Dark Mode'),
-              trailing: Switch(
-                value: false,
-                onChanged: (value) {},
-              )),
+          const SizedBox(width: 80),
           ListTile(
             onTap: () async {
               Response response = await logout();

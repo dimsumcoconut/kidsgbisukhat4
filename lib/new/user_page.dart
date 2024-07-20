@@ -61,8 +61,10 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add User'),
-        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.black,
+        title: const Text('Tambah',
+            style: TextStyle(fontSize: 20, color: Colors.white)),
       ),
       body: Form(
         key: formKey,
@@ -70,10 +72,10 @@ class _UserPageState extends State<UserPage> {
           padding: const EdgeInsets.all(10),
           children: [
             TextFormField(
+              keyboardType: TextInputType.emailAddress,
               controller: emailController,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), label: Text('Email')),
-              keyboardType: TextInputType.emailAddress,
               validator: (value) {
                 if (value!.isEmpty || value == '') {
                   return 'Masukkan Email';
@@ -91,7 +93,7 @@ class _UserPageState extends State<UserPage> {
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value!.isEmpty || value == '') {
-                  return 'Masukkan Name';
+                  return 'Masukkan Nama';
                 }
                 return null;
               },
@@ -99,34 +101,19 @@ class _UserPageState extends State<UserPage> {
             const SizedBox(
               height: 10,
             ),
-            TextFormField(
-              controller: noHpController,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), label: Text('No HP')),
-              keyboardType: TextInputType.phone,
-              validator: (value) {
-                if (value!.isEmpty || value == '') {
-                  return 'Masukkan No HP';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: alamatController,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), label: Text('Alamat')),
-              maxLines: 3,
-              keyboardType: TextInputType.streetAddress,
-              validator: (value) {
-                if (value!.isEmpty || value == '') {
-                  return 'Masukkan Alamat';
-                }
-                return null;
-              },
-            ),
+            // TextFormField(
+            //   controller: noHpController,
+            //   decoration: const InputDecoration(
+            //       border: OutlineInputBorder(), label: Text('No HP')),
+            //   keyboardType: TextInputType.phone,
+            //   validator: (value) {
+            //     if (value!.isEmpty || value == '') {
+            //       return 'Masukkan No HP';
+            //     }
+            //     return null;
+            //   },
+            // ),
+
             const SizedBox(
               height: 10,
             ),
@@ -162,12 +149,12 @@ class _UserPageState extends State<UserPage> {
               },
             ),
             const SizedBox(
-              height: 10,
+              height: 15,
             ),
             DropdownButtonFormField(
               decoration: const InputDecoration(
                 labelText: 'Jabatan',
-                hintText: 'Masukkan Jbatan',
+                hintText: 'Masukkan Jabatan',
                 floatingLabelAlignment: FloatingLabelAlignment.start,
                 isCollapsed: false,
                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -179,12 +166,6 @@ class _UserPageState extends State<UserPage> {
                   value: 'Guru',
                   child: Text(
                     "Guru",
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: 'Admin',
-                  child: Text(
-                    "Admin",
                   ),
                 ),
               ],
@@ -201,6 +182,9 @@ class _UserPageState extends State<UserPage> {
               children: [
                 Expanded(
                     child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                        ),
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             setState(() {
@@ -209,11 +193,9 @@ class _UserPageState extends State<UserPage> {
                             Response response;
 
                             Map<String, dynamic> user = {
-                              'name': nameController.text,
+                              'nama': nameController.text,
                               'email': emailController.text,
-                              'no_hp': noHpController.text,
-                              'alamat': alamatController.text,
-                              'level': jabatan,
+                              'jabatan': jabatan,
                               'tanggal_lahir': Timestamp.fromDate(dateTime!),
                               'password':
                                   DateFormat('yyyyMMdd').format(dateTime!),
@@ -253,7 +235,7 @@ class _UserPageState extends State<UserPage> {
                                   Text('Loading...')
                                 ],
                               )
-                            : const Text('Simmpan'))),
+                            : const Text('Simpan'))),
               ],
             )
           ],

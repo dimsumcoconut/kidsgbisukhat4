@@ -14,22 +14,29 @@ class _DetailJadwalPageState extends State<DetailJadwalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Detail Jadwal'),
-        centerTitle: true,
+         appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        title: const Text("Detail Jadwal",
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white
+            )),
+        centerTitle: false,
       ),
       body: ListView(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.all(10),
         children: [
+          const SizedBox(height: 10),
           TextFormField(
             controller: TextEditingController(
                 text: DateFormat('EEEE, dd-MMM-yyyy', 'id_ID')
                     .format(widget.jadwal['tanggal'].toDate())),
             readOnly: true,
             decoration: const InputDecoration(
-                border: OutlineInputBorder(), label: Text('Tanggal Lahir')),
+                border: OutlineInputBorder(), label: Text('Tanggal')),
             onTap: () {},
             validator: (value) {
               if (value!.isEmpty || value == '') {
@@ -39,12 +46,12 @@ class _DetailJadwalPageState extends State<DetailJadwalPage> {
             },
           ),
           const SizedBox(
-            height: 10,
+            height: 18,
           ),
           TextFormField(
             controller: TextEditingController(text: widget.jadwal['name']),
             decoration: const InputDecoration(
-                border: OutlineInputBorder(), label: Text('Nama Jadwal')),
+                border: OutlineInputBorder(), label: Text('Nama')),
             keyboardType: TextInputType.streetAddress,
             validator: (value) {
               if (value!.isEmpty || value == '') {
@@ -59,7 +66,7 @@ class _DetailJadwalPageState extends State<DetailJadwalPage> {
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Petugas'),
+              Text('Tugas'),
             ],
           ),
           const SizedBox(
@@ -76,7 +83,7 @@ class _DetailJadwalPageState extends State<DetailJadwalPage> {
                       prefixIcon: widget.jadwal['details'][index]['user']
                                   ['email'] ==
                               widget.user['email']
-                          ? const Icon(Icons.person)
+                          ? const Icon(Icons.warning)
                           : null,
                       border: const OutlineInputBorder(),
                       label: Text(widget.jadwal['details'][index]['tugas'])),

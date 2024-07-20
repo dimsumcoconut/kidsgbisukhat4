@@ -15,7 +15,8 @@ class _ListUserPageState extends State<ListUserPage> {
   List<Map<String, dynamic>> listUser = [];
 
   final CollectionReference collectionUser =
-      FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users')
+      ;
   Stream<List<dynamic>> fetchAllSortedFirestore() {
     return collectionUser.snapshots().map((s) => s.docs.map((e) {
           Map<String, dynamic> user = {
@@ -36,12 +37,12 @@ class _ListUserPageState extends State<ListUserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         elevation: 0,
         title: const Text("Data Guru",
             style: TextStyle(
               fontSize: 20,
-              color: Colors.black
+              color: Colors.white
             )),
         centerTitle: false,
       ),
@@ -79,7 +80,7 @@ class _ListUserPageState extends State<ListUserPage> {
                 return ListTile(
                   onTap: () {},
                   title: Text(user['email']),
-                  subtitle: Text(user['jabatan']),
+                  subtitle: Text(user['password']),
                   // trailing: const Icon(Icons.arrow_forward_ios_rounded),
                 );
               },

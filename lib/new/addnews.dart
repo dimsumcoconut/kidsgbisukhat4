@@ -1,52 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:kidsgbisukhat4/consts.dart';
 
-class AjukanIzinPage extends StatefulWidget {
+class AddBerita extends StatefulWidget {
   final dynamic user;
 
-  const AjukanIzinPage({super.key, this.user});
+  const AddBerita({super.key, this.user});
 
   @override
-  State<AjukanIzinPage> createState() => _AjukanIzinPageState();
+  State<AddBerita> createState() => _AddBeritaState();
 }
 
-class _AjukanIzinPageState extends State<AjukanIzinPage> {
+class _AddBeritaState extends State<AddBerita> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController alasanController = TextEditingController();
-  final TextEditingController tanggalIzinController = TextEditingController();
+  final TextEditingController tanggalController = TextEditingController();
+  final TextEditingController beritaController = TextEditingController();
+  final TextEditingController keteranganController = TextEditingController();
+
   Map<String, dynamic>? user;
   List<Map<String, dynamic>> listUser = [];
   bool isLoadingSave = false;
   DateTime? dateTime;
 
-  final CollectionReference collectionUser =
-      FirebaseFirestore.instance.collection('users');
   final CollectionReference collectionIzin =
-      FirebaseFirestore.instance.collection('izin');
-
-  allUser() async {
-    List<Map<String, dynamic>> data =
-        await collectionUser.get().then((value) => value.docs.map((e) {
-              Map<String, dynamic> user = {
-                'nama': e['nama'],
-                'email': e['email'],
-                'jabatan': e['jabatan'],
-                'password': e['password'],
-              };
-              return user;
-            }).toList());
-    listUser = data;
-    listUser = listUser
-        .where((element) => element['jabatan'] != 'Admin')
-        // .sorted(
-        //   (a, b) => b['created_at'].compareTo(a['created_at']),
-        // )
-        .toList();
-    setState(() {});
-    return data;
-  }
+      FirebaseFirestore.instance.collection('berita');
 
   createData(dynamic izin) async {
     String message = '';
@@ -61,7 +38,7 @@ class _AjukanIzinPageState extends State<AjukanIzinPage> {
       );
       data = izin;
       status = StatusType.success;
-      message = 'Tambah Izin Sukses';
+      message = 'Tambah Berita Sukses';
     } catch (e) {
       message = 'Gagal ';
       data = null;
@@ -75,7 +52,6 @@ class _AjukanIzinPageState extends State<AjukanIzinPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    allUser();
   }
 
   @override
@@ -84,7 +60,7 @@ class _AjukanIzinPageState extends State<AjukanIzinPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.black,
-        title: const Text("Ajukan Izin",
+        title: const Text("Tambah Berita",
             style: TextStyle(fontSize: 20, color: Colors.white)),
       ),
       body: Form(
@@ -92,91 +68,48 @@ class _AjukanIzinPageState extends State<AjukanIzinPage> {
         child: ListView(
           padding: const EdgeInsets.all(10),
           children: [
-            widget.user['jabatan'] == 'Admin'
-                ? DropdownButtonFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'User',
-                      hintText: 'Masukkan User',
-                      floatingLabelAlignment: FloatingLabelAlignment.start,
-                      isCollapsed: false,
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      // prefixIcon: const Icon(Icons.menu_rounded),
-                      border: OutlineInputBorder(),
-                    ),
-                    items: [
-                      ...List.generate(
-                        listUser.length,
-                        (index) {
-                          return DropdownMenuItem(
-                            value: listUser[index],
-                            child: Text(
-                              listUser[index]['nama'],
-                            ),
-                          );
-                        },
-                      )
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        user = value;
-                      });
-                    },
-                  )
-                : const SizedBox.shrink(),
-            widget.user['jabatan'] == 'Admin'
-                ? const SizedBox(
-                    height: 10,
-                  )
-                : const SizedBox.shrink(),
             TextFormField(
-              controller: tanggalIzinController,
-              readOnly: true,
+              controller: beritaController,
               decoration: const InputDecoration(
-                  border: OutlineInputBorder(), label: Text('Tanggal Izin')),
-              onTap: () {
-                showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2099),
-                ).then((pickedDate) {
-                  if (pickedDate != null) {
-                    setState(() {
-                      dateTime = pickedDate;
-                      String formattedDate =
-                          DateFormat('EEEE, dd-MMM-yyyy', 'id_ID')
-                              .format(pickedDate);
-                      // print(formattedDate);
-                      tanggalIzinController.text = formattedDate;
-                    });
-                  }
-                });
-              },
-              validator: (value) {
-                if (value!.isEmpty || value == '') {
-                  return 'Masukkan Tanggal Izin';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: alasanController,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), label: Text('Alasan')),
-              maxLines: 3,
+                  border: OutlineInputBorder(), label: Text('Nama Berita')),
               keyboardType: TextInputType.streetAddress,
               validator: (value) {
                 if (value!.isEmpty || value == '') {
-                  return 'Masukkan Alasan';
+                  return 'Harap Diisi.';
                 }
                 return null;
               },
             ),
             const SizedBox(
               height: 10,
+            ),
+            TextFormField(
+              controller: tanggalController,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(), label: Text('Tanggal')),
+              keyboardType: TextInputType.streetAddress,
+              validator: (value) {
+                if (value!.isEmpty || value == '') {
+                  return 'Harap Diisi.';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            TextFormField(
+              controller: keteranganController,
+              maxLines: 4,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(), label: Text('Keterangan')),
+              keyboardType: TextInputType.streetAddress,
+              validator: (value) {
+                if (value!.isEmpty || value == '') {
+                  return 'Harap Diisi.';
+                }
+                return null;
+              },
             ),
             const SizedBox(
               height: 15,
@@ -196,11 +129,9 @@ class _AjukanIzinPageState extends State<AjukanIzinPage> {
                             Response response;
 
                             Map<String, dynamic> izin = {
-                              // 'user': widget.user ?? user,
-                              'user': user ?? widget.user,
-                              'alasan': alasanController.text,
-                              'status': 0,
-                              'tanggal_izin': Timestamp.fromDate(dateTime!),
+                              'berita': beritaController.text,
+                              'tanggal': tanggalController.text,
+                              'keterangan': keteranganController.text,
                               'created_at': Timestamp.now(),
                               'updated_at': Timestamp.now(),
                             };
@@ -212,7 +143,7 @@ class _AjukanIzinPageState extends State<AjukanIzinPage> {
                               // if (widget.user['jabatan'] == 'Admin') {
                               Navigator.of(context).pop();
                               // } else {
-                              //   alasanController.clear();
+                              //   bulanController.clear();
                               //   tanggalIzinController.clear();
                               // }
 
@@ -243,7 +174,7 @@ class _AjukanIzinPageState extends State<AjukanIzinPage> {
                                   Text('Loading...')
                                 ],
                               )
-                            : const Text('Ajukan Izin'))),
+                            : const Text('Tambah Berita'))),
               ],
             )
           ],

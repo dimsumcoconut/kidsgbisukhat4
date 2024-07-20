@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kidsgbisukhat4/new/bahan.dart';
+import 'package:kidsgbisukhat4/new/list_berita.dart';
 import 'package:kidsgbisukhat4/new/list_izin.dart';
 import 'package:kidsgbisukhat4/new/list_jadwal.dart';
 import 'package:kidsgbisukhat4/new/list_user.dart';
-import 'package:kidsgbisukhat4/new/priofil_page.dart';
+import 'package:kidsgbisukhat4/new/profil_page.dart';
 
 class MainPage extends StatefulWidget {
   final dynamic user;
@@ -38,15 +40,39 @@ class _MainPageState extends State<MainPage> {
               ? ListJadwalPage(
                   user: widget.user,
                 )
-              : const ProfilePage();
+              : ListBerita(
+                  user: widget.user,
+                );
+
         case 3:
           return widget.user['jabatan'] == 'Admin'
-              ? const ProfilePage()
+              ? ListBerita(
+                  user: widget.user,
+                )
+              : BahanPage(
+                  user: widget.user,
+                );
+
+        case 4:
+          return widget.user['jabatan'] == 'Admin'
+              ? BahanPage(
+                  user: widget.user,
+                )
+              : ProfilePage(
+                  user: widget.user,
+                );
+
+        case 5:
+          return widget.user['jabatan'] == 'Admin'
+              ? const ProfilePage(
+                  user: null,
+                )
               : const Center(
                   child: Text(
                     'Something Wrong!!!',
                   ),
                 );
+
         default:
           return const Center(
             child: Text(
@@ -75,10 +101,18 @@ class _MainPageState extends State<MainPage> {
               const BottomNavigationBarItem(
                   icon: Icon(Icons.edit), label: 'List Izin'),
             const BottomNavigationBarItem(
-                icon: Icon(Icons.date_range), label: 'List Jadwal'),
+                icon: Icon(Icons.date_range), label: 'Jadwal'),
+            
+            if (widget.user['jabatan'] == 'Guru')
+            const BottomNavigationBarItem(
+                icon: Icon(Icons.edit), label: 'Izin'),
+            
             if (widget.user['jabatan'] == 'Guru')
               const BottomNavigationBarItem(
-                  icon: Icon(Icons.list), label: 'Izin'),
+                  icon: Icon(Icons.newspaper), label: 'Berita'),
+         
+              const BottomNavigationBarItem(
+                  icon: Icon(Icons.download), label: 'Bahan'),
             const BottomNavigationBarItem(
                 icon: Icon(Icons.person_rounded), label: 'Profile'),
           ]),

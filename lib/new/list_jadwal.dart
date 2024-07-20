@@ -48,12 +48,12 @@ class _ListJadwalPageState extends State<ListJadwalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         elevation: 0,
-        title: const Text("Buat Jadwal",
+        title: const Text("Jadwal",
             style: TextStyle(
               fontSize: 20,
-              color: Colors.black
+              color: Colors.white
             )),
         centerTitle: false,
       ),

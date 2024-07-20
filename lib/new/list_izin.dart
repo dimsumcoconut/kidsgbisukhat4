@@ -58,9 +58,15 @@ class _ListIzinPageState extends State<ListIzinPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('List Izin'),
-        centerTitle: true,
+     appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        title: const Text("List Izin",
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white
+            )),
+        centerTitle: false,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -97,7 +103,7 @@ class _ListIzinPageState extends State<ListIzinPage> {
                 Map<String, dynamic> izin = snapshot.data![index];
                 return ListTile(
                   tileColor: izin['status'] == 1
-                      ? Colors.green
+                      ? Colors.blue
                       : izin['status'] == 2
                           ? Colors.red
                           : Colors.transparent,

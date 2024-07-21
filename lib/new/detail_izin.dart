@@ -203,6 +203,9 @@ class _DetailIzinPageState extends State<DetailIzinPage> {
                     children: [
                       Expanded(
                           child: ElevatedButton(
+                             style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.black,
+                              ),
                               onPressed: () async {
                                 if (formKey.currentState!.validate()) {
                                   setState(() {

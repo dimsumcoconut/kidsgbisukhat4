@@ -14,7 +14,6 @@ class ListJadwalPage extends StatefulWidget {
 }
 
 class _ListJadwalPageState extends State<ListJadwalPage> {
-
   final CollectionReference collectionJadwal =
       FirebaseFirestore.instance.collection('jadwals');
 
@@ -51,10 +50,7 @@ class _ListJadwalPageState extends State<ListJadwalPage> {
         backgroundColor: Colors.black,
         elevation: 0,
         title: const Text("Jadwal",
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.white
-            )),
+            style: TextStyle(fontSize: 20, color: Colors.white)),
         centerTitle: false,
       ),
       body: StreamBuilder(
@@ -75,6 +71,7 @@ class _ListJadwalPageState extends State<ListJadwalPage> {
             ); // Handle the case when there's no data
           } else {
             return ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 10),
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 Map<String, dynamic> jadwal = snapshot.data![index];

@@ -204,89 +204,91 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          elevation: 0,
-          title: const Text("Atur Jadwal",
-              style: TextStyle(fontSize: 20, color: Colors.white)),
-          centerTitle: false,
-        ),
-        body:Form(
-            key: formKey,
-            child: ListView(
-              shrinkWrap: true,
-              // physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(15),
-              children: [
-                TextFormField(
-                  controller: tanggalJadwalController,
-                  readOnly: true,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), label: Text('Tanggal')),
-                  onTap: () {
-                    showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2099),
-                    ).then((pickedDate) {
-                      if (pickedDate != null) {
-                        setState(() {
-                          dateTime = pickedDate;
-                          String formattedDate =
-                              DateFormat('EEEE, dd-MMM-yyyy', 'id_ID')
-                                  .format(pickedDate);
-                          // print(formattedDate);
-                          cekAvailableUser();
-                          tanggalJadwalController.text = formattedDate;
-                        });
-                      }
-                    });
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty || value == '') {
-                      return 'Masukkan Tanggal Jadwal';
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        title: const Text("Atur Jadwal",
+            style: TextStyle(fontSize: 20, color: Colors.white)),
+        centerTitle: false,
+      ),
+      body: Form(
+        key: formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            // physics: const NeverScrollableScrollPhysics(),
+            children: [
+              TextFormField(
+                controller: tanggalJadwalController,
+                readOnly: true,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), label: Text('Tanggal')),
+                onTap: () {
+                  showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2099),
+                  ).then((pickedDate) {
+                    if (pickedDate != null) {
+                      setState(() {
+                        dateTime = pickedDate;
+                        String formattedDate =
+                            DateFormat('EEEE, dd-MMM-yyyy', 'id_ID')
+                                .format(pickedDate);
+                        // print(formattedDate);
+                        cekAvailableUser();
+                        tanggalJadwalController.text = formattedDate;
+                      });
                     }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: namaJadwalController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), label: Text('Keterangan')),
-                  keyboardType: TextInputType.streetAddress,
-                  validator: (value) {
-                    if (value!.isEmpty || value == '') {
-                      return 'Harap Diisi';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Guru'),
-                    // IconButton(
-                    //     onPressed: () async {
-                    //       setState(() {
-                    //         listAvailableUsers.shuffle();
-                    //       });
-                    //     },
-                    //     icon: const Icon(Icons.refresh))
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                listAvailableUsers.isNotEmpty
+                  });
+                },
+                validator: (value) {
+                  if (value!.isEmpty || value == '') {
+                    return 'Masukkan Tanggal Jadwal';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                controller: namaJadwalController,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), label: Text('Keterangan')),
+                keyboardType: TextInputType.streetAddress,
+                validator: (value) {
+                  if (value!.isEmpty || value == '') {
+                    return 'Harap Diisi';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Guru'),
+                  // IconButton(
+                  //     onPressed: () async {
+                  //       setState(() {
+                  //         listAvailableUsers.shuffle();
+                  //       });
+                  //     },
+                  //     icon: const Icon(Icons.refresh))
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: listAvailableUsers.isNotEmpty
                     ? ListView.separated(
                         shrinkWrap: true,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         itemBuilder: (context, index) {
                           // return Text(listAvailableUsers[index]['name']);
                           return TextFormField(
@@ -304,80 +306,80 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
                             ),
                         itemCount: tugas.length)
                     : const Center(child: Text('Pilih Tanggal')),
-                const SizedBox(
-                  height: 15,
-                ),
-                listAvailableUsers.isNotEmpty
-                    ? Row(
-                        children: [
-                          Expanded(
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.black,
-                                  ),
-                                  onPressed: () async {
-                                    if (formKey.currentState!.validate()) {
-                                      setState(() {
-                                        isLoadingSave = true;
-                                      });
-                                      Response? response;
-                                      List<dynamic> details = [];
-                                      for (var i = 0; i < tugas.length; i++) {
-                                        details.add({
-                                          'tugas': tugas[i],
-                                          'user': listAvailableUsers[i],
-                                          'created_at': Timestamp.now(),
-                                        });
-                                      }
-                                      Map<String, dynamic> jadwal = {
-                                        'tanggal':
-                                            Timestamp.fromDate(dateTime!),
-                                        'name': namaJadwalController.text,
-                                        'details': details,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              listAvailableUsers.isNotEmpty
+                  ? Row(
+                      children: [
+                        Expanded(
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black,
+                                ),
+                                onPressed: () async {
+                                  if (formKey.currentState!.validate()) {
+                                    setState(() {
+                                      isLoadingSave = true;
+                                    });
+                                    Response? response;
+                                    List<dynamic> details = [];
+                                    for (var i = 0; i < tugas.length; i++) {
+                                      details.add({
+                                        'tugas': tugas[i],
+                                        'user': listAvailableUsers[i],
                                         'created_at': Timestamp.now(),
-                                      };
-                                      response = await simpanJadwal(jadwal);
-                                      setState(() {
-                                        isLoadingSave = false;
                                       });
-                                      if (context.mounted) {
-                                        Navigator.of(context).pop();
-
-                                        var snackBar = SnackBar(
-                                          behavior: SnackBarBehavior.floating,
-                                          content: Text(response!.message!),
-                                        );
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackBar);
-                                      }
                                     }
-                                  },
-                                  child: isLoadingSave
-                                      ? const Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Center(
-                                              child: SizedBox(
-                                                width: 14,
-                                                height: 14,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  color: Colors.white,
-                                                ),
+                                    Map<String, dynamic> jadwal = {
+                                      'tanggal': Timestamp.fromDate(dateTime!),
+                                      'name': namaJadwalController.text,
+                                      'details': details,
+                                      'created_at': Timestamp.now(),
+                                    };
+                                    response = await simpanJadwal(jadwal);
+                                    setState(() {
+                                      isLoadingSave = false;
+                                    });
+                                    if (context.mounted) {
+                                      Navigator.of(context).pop();
+
+                                      var snackBar = SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        content: Text(response!.message!),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                    }
+                                  }
+                                },
+                                child: isLoadingSave
+                                    ? const Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Center(
+                                            child: SizedBox(
+                                              width: 14,
+                                              height: 14,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2,
+                                                color: Colors.white,
                                               ),
                                             ),
-                                            SizedBox(width: 14),
-                                            Text('Loading...')
-                                          ],
-                                        )
-                                      : const Text('Simpan'))),
-                        ],
-                      )
-                    : const SizedBox.shrink()
-              ],
-            ),
+                                          ),
+                                          SizedBox(width: 14),
+                                          Text('Loading...')
+                                        ],
+                                      )
+                                    : const Text('Simpan'))),
+                      ],
+                    )
+                  : const SizedBox.shrink()
+            ],
           ),
-        );
+        ),
+      ),
+    );
   }
 }

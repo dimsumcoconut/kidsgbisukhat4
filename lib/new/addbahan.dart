@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kidsgbisukhat4/consts.dart';
 
 class AddBahan extends StatefulWidget {
@@ -68,14 +69,33 @@ class _AddBahanState extends State<AddBahan> {
         child: ListView(
           padding: const EdgeInsets.all(10),
           children: [
-            TextFormField(
+              TextFormField(
               controller: bulanController,
+              readOnly: true,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), label: Text('Bulan')),
-              keyboardType: TextInputType.streetAddress,
+              onTap: () {
+                showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(2099),
+                ).then((pickedDate) {
+                  if (pickedDate != null) {
+                    setState(() {
+                      dateTime = pickedDate;
+                      String formattedDate =
+                          DateFormat('EEEE, dd-MMM-yyyy', 'id_ID')
+                              .format(pickedDate);
+                      // print(formattedDate);
+                      bulanController.text = formattedDate;
+                    });
+                  }
+                });
+              },
               validator: (value) {
                 if (value!.isEmpty || value == '') {
-                  return 'Harap Diisi.';
+                  return 'Masukkan Bulan';
                 }
                 return null;
               },
@@ -86,7 +106,7 @@ class _AddBahanState extends State<AddBahan> {
             TextFormField(
               controller: bahanController,
               decoration: const InputDecoration(
-                  border: OutlineInputBorder(), label: Text('Bahan')),
+                  border: OutlineInputBorder(), label: Text('Link Google Drive')),
               keyboardType: TextInputType.streetAddress,
               validator: (value) {
                 if (value!.isEmpty || value == '') {
@@ -104,12 +124,12 @@ class _AddBahanState extends State<AddBahan> {
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), label: Text('Keterangan')),
               keyboardType: TextInputType.streetAddress,
-              validator: (value) {
-                if (value!.isEmpty || value == '') {
-                  return 'Harap Diisi.';
-                }
-                return null;
-              },
+              // validator: (value) {
+              //   if (value!.isEmpty || value == '') {
+              //     return 'Harap Diisi.';
+              //   }
+              //   return null;
+              // },
             ),
             const SizedBox(
               height: 15,
@@ -129,7 +149,7 @@ class _AddBahanState extends State<AddBahan> {
                             Response response;
 
                             Map<String, dynamic> izin = {
-                              'bulan': bulanController.text,
+                              'bulan': Timestamp.fromDate(dateTime!),
                               'bahan': bahanController.text,
                               'keterangan': keteranganController.text,
                               'created_at': Timestamp.now(),

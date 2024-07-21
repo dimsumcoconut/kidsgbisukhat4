@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:kidsgbisukhat4/new/addbahan.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 class BahanPage extends StatefulWidget {
   final dynamic user;
@@ -44,19 +44,18 @@ class _BahanPageState extends State<BahanPage> {
               // )
               .toList());
     } else {
-      return collectionbahan.snapshots().map((s) => s.docs
-          .map((e) {
+      return collectionbahan.snapshots().map((s) => s.docs.map((e) {
             return {
               'bahan': e['bahan'],
               'keterangan': e['keterangan'],
               'bulan': e['bulan'],
             };
           })
-          // .where((element) => element['user']['email'] == widget.user['email'])
-          // .sorted(
-          //   (a, b) => b['created_at'].compareTo(a['created_at']),
-          // )
-          .toList());
+              // .where((element) => element['user']['email'] == widget.user['email'])
+              // .sorted(
+              //   (a, b) => b['created_at'].compareTo(a['created_at']),
+              // )
+              .toList());
     }
   }
 
@@ -70,7 +69,7 @@ class _BahanPageState extends State<BahanPage> {
             style: TextStyle(fontSize: 20, color: Colors.white)),
         centerTitle: false,
       ),
-       floatingActionButton: widget.user['jabatan'] == 'Admin'
+      floatingActionButton: widget.user['jabatan'] == 'Admin'
           ? FloatingActionButton(
               onPressed: () {
                 Navigator.push(
@@ -105,18 +104,18 @@ class _BahanPageState extends State<BahanPage> {
                 Map<String, dynamic> bahan = snapshot.data![index];
                 return ListTile(
                   title: Text(
-                    bahan['bulan'],
-                    style: const TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold)
-                  ),
+                      '${DateFormat('MMMM - yyyy', 'id_ID').format(bahan['bulan'].toDate())}',
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.bold)),
                   subtitle: GestureDetector(
                     onTap: () async {
-                      if (!await launchUrl(Uri.parse('${bahan['bahan']}',))) {
+                      if (!await launchUrl(Uri.parse(
+                        '${bahan['bahan']}',
+                      ))) {
                         throw Exception('Could not launch ${bahan['bahan']}');
                       }
                     },
-
-                    child: Text('${bahan['bahan']}',
+                    child: Text('Download',
                         style: const TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold)),
                   ),

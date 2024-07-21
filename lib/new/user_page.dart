@@ -101,19 +101,18 @@ class _UserPageState extends State<UserPage> {
             const SizedBox(
               height: 10,
             ),
-            // TextFormField(
-            //   controller: noHpController,
-            //   decoration: const InputDecoration(
-            //       border: OutlineInputBorder(), label: Text('No HP')),
-            //   keyboardType: TextInputType.phone,
-            //   validator: (value) {
-            //     if (value!.isEmpty || value == '') {
-            //       return 'Masukkan No HP';
-            //     }
-            //     return null;
-            //   },
-            // ),
-
+            TextFormField(
+              controller: noHpController,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(), label: Text('No HP')),
+              keyboardType: TextInputType.phone,
+              validator: (value) {
+                if (value!.isEmpty || value == '') {
+                  return 'Masukkan No HP';
+                }
+                return null;
+              },
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -196,6 +195,7 @@ class _UserPageState extends State<UserPage> {
                               'nama': nameController.text,
                               'email': emailController.text,
                               'jabatan': jabatan,
+                              'no_hp': noHpController.text,
                               'tanggal_lahir': Timestamp.fromDate(dateTime!),
                               'password':
                                   DateFormat('yyyyMMdd').format(dateTime!),

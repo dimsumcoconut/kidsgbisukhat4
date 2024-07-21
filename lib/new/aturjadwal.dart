@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -239,6 +241,15 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
                         // print(formattedDate);
                         cekAvailableUser();
                         tanggalJadwalController.text = formattedDate;
+                        // String formatNamaHari =
+                        //     DateFormat('EEEE', 'id_ID').format(pickedDate);
+                        // String formatNamaBulan =
+                        //     DateFormat('MMMM', 'id_ID').format(pickedDate);
+                        // String ke =
+                        //     DateFormat('dd', 'id_ID').format(pickedDate);
+
+                        // namaJadwalController.text =
+                        //     '${formatNamaHari} ke-${(int.parse(ke) ~/ 6)} ${formatNamaBulan} ${DateFormat('yyyy', 'id_ID').format(pickedDate)}';
                       });
                     }
                   });
@@ -255,8 +266,9 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
               ),
               TextFormField(
                 controller: namaJadwalController,
+                // readOnly: true,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), label: Text('Keterangan')),
+                    border: OutlineInputBorder(), label: Text('Nama')),
                 keyboardType: TextInputType.streetAddress,
                 validator: (value) {
                   if (value!.isEmpty || value == '') {

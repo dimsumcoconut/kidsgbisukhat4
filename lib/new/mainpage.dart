@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kidsgbisukhat4/new/bahan.dart';
+import 'package:kidsgbisukhat4/new/list_bahan.dart';
 import 'package:kidsgbisukhat4/new/list_berita.dart';
 import 'package:kidsgbisukhat4/new/list_izin.dart';
 import 'package:kidsgbisukhat4/new/list_jadwal.dart';
@@ -96,7 +96,7 @@ class _MainPageState extends State<MainPage> {
           items: [
             if (widget.user['jabatan'] == 'Admin')
               const BottomNavigationBarItem(
-                  icon: Icon(Icons.person), label: 'List User'),
+                  icon: Icon(Icons.person), label: 'Data Guru'),
             if (widget.user['jabatan'] == 'Admin')
               const BottomNavigationBarItem(
                   icon: Icon(Icons.edit), label: 'List Izin'),

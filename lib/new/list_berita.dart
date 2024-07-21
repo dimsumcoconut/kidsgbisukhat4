@@ -106,7 +106,7 @@ class _ListBeritaState extends State<ListBerita> {
                     berita['berita'],
                   ),
                   subtitle: Text(
-                    '${berita['tanggal']}',
+                    '${berita['tanggal']}\n${berita['keterangan']}',
                   ),
                 );
               },

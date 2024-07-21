@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kidsgbisukhat4/consts.dart';
 
 class AddBerita extends StatefulWidget {
@@ -85,12 +86,31 @@ class _AddBeritaState extends State<AddBerita> {
             ),
             TextFormField(
               controller: tanggalController,
+              readOnly: true,
               decoration: const InputDecoration(
-                  border: OutlineInputBorder(), label: Text('Tanggal')),
-              keyboardType: TextInputType.streetAddress,
+                  border: OutlineInputBorder(), label: Text('Masukkan Tanggal')),
+              onTap: () {
+                showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(2099),
+                ).then((pickedDate) {
+                  if (pickedDate != null) {
+                    setState(() {
+                      dateTime = pickedDate;
+                      String formattedDate =
+                          DateFormat('EEEE, dd-MMM-yyyy', 'id_ID')
+                              .format(pickedDate);
+                      // print(formattedDate);
+                      tanggalController.text = formattedDate;
+                    });
+                  }
+                });
+              },
               validator: (value) {
                 if (value!.isEmpty || value == '') {
-                  return 'Harap Diisi.';
+                  return 'Masukkan Tanggal Izin';
                 }
                 return null;
               },

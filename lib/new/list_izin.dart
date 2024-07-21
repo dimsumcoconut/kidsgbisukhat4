@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
@@ -58,14 +59,11 @@ class _ListIzinPageState extends State<ListIzinPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
         title: const Text("List Izin",
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.white
-            )),
+            style: TextStyle(fontSize: 20, color: Colors.white)),
         centerTitle: false,
       ),
       floatingActionButton: FloatingActionButton(
@@ -101,12 +99,12 @@ class _ListIzinPageState extends State<ListIzinPage> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 Map<String, dynamic> izin = snapshot.data![index];
-                return ListTile(
-                  tileColor: izin['status'] == 1
-                      ? Colors.blue
-                      : izin['status'] == 2
-                          ? Colors.red
-                          : Colors.transparent,
+                String status = izin['status'] == 0
+                    ? 'Belum Dibaca'
+                    : izin['status'] == 1
+                        ? 'Disetujui'
+                        : 'Tidak Disetujui';
+                return GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
@@ -118,21 +116,65 @@ class _ListIzinPageState extends State<ListIzinPage> {
                       ),
                     );
                   },
-                  title: Text(
-                    izin['user']['nama'],
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  izin['user']['nama'],
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text('${izin['alasan']}'),
+                                Text(
+                                    '${DateFormat('EEEE, dd-MMM-yyyy', 'id_ID').format(izin['tanggal_izin'].toDate())}'),
+                                Text(status),
+                              ],
+                            ),
+                          ),
+                          Icon(Icons.arrow_forward_ios_rounded)
+                        ],
+                      ),
+                    ),
                   ),
-                  subtitle: Text(
-                    '${izin['alasan']}\n(${DateFormat('EEEE, dd-MMM-yyyy', 'id_ID').format(izin['tanggal_izin'].toDate())})',
-                  ),
-                  trailing: const Icon(Icons.arrow_forward_ios_rounded),
                 );
+                // return ListTile(
+                //   tileColor:
+                //   izin['status'] == 1
+                //       ? Colors.blue
+                //       : izin['status'] == 2
+                //           ? Colors.red
+                //           : Colors.transparent,
+                //   onTap: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => DetailIzinPage(
+                //           izin: izin,
+                //           user: widget.user,
+                //         ),
+                //       ),
+                //     );
+                //   },
+                //   title: Text(
+                //     izin['user']['nama'],
+                //   ),
+                //   subtitle: Text(
+                //     '${izin['alasan']}\n${DateFormat('EEEE, dd-MMM-yyyy', 'id_ID').format(izin['tanggal_izin'].toDate())}\n${izin['status']}',
+                //   ),
+                //   trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                // );
               },
             );
-            
           }
         },
       ),
-     
     );
   }
 }

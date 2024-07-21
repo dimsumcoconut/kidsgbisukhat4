@@ -14,6 +14,21 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser();
+  }
+
+  Map<String, dynamic> dataUser = {};
+  getUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    dataUser = jsonDecode(prefs.getString('userPref')!);
+
+    setState(() {});
+  }
+
   showSnackBar(String message) {
     final snackBar = SnackBar(
       content: Text(message),
@@ -54,13 +69,37 @@ class _ProfilePageState extends State<ProfilePage> {
         elevation: 0,
         backgroundColor: Colors.black,
         title: const Text("Profil",
-            style: TextStyle(fontSize: 20, color: Colors.white)
-            ),
+            style: TextStyle(fontSize: 20, color: Colors.white)),
         centerTitle: false,
       ),
       body: Column(
         children: [
-          const SizedBox(width: 80),
+          const SizedBox(width: 90),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20, left: 1),
+            child: Row(children: [
+              const SizedBox(width: 15),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15, bottom: 5),
+                    child: Text(
+                      "Nama: " + dataUser['nama'],
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                  ),
+                  Text(
+                    // ignore: prefer_interpolation_to_compose_strings
+                    "Email: " + dataUser['email'],
+                    style: const TextStyle(
+                        fontSize: 15,
+                        color: Color.fromARGB(255, 172, 172, 172)),
+                  ),
+                ],
+              ),
+            ]),
+          ),
           ListTile(
             onTap: () async {
               Response response = await logout();

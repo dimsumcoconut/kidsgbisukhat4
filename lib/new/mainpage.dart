@@ -102,15 +102,22 @@ class _MainPageState extends State<MainPage> {
                   icon: Icon(Icons.edit), label: 'List Izin'),
             const BottomNavigationBarItem(
                 icon: Icon(Icons.date_range), label: 'Jadwal'),
-            
+
+              if (widget.user['jabatan'] == 'Admin')
+              const BottomNavigationBarItem(
+                  icon: Icon(Icons.newspaper), label: 'Berita'),
+            if (widget.user['jabatan'] == 'Admin')
+              const BottomNavigationBarItem(
+                  icon: Icon(Icons.download), label: 'Bahan'),
+                  
+
             if (widget.user['jabatan'] == 'Guru')
-            const BottomNavigationBarItem(
-                icon: Icon(Icons.edit), label: 'Izin'),
-            
+              const BottomNavigationBarItem(
+                  icon: Icon(Icons.edit), label: 'Izin'),
             if (widget.user['jabatan'] == 'Guru')
               const BottomNavigationBarItem(
                   icon: Icon(Icons.newspaper), label: 'Berita'),
-         
+            if (widget.user['jabatan'] == 'Guru')
               const BottomNavigationBarItem(
                   icon: Icon(Icons.download), label: 'Bahan'),
             const BottomNavigationBarItem(

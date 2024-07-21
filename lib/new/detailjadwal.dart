@@ -26,7 +26,7 @@ class _DetailJadwalPageState extends State<DetailJadwalPage> {
       ),
       body: ListView(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        // physics: const NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.all(10),
         children: [
           const SizedBox(height: 10),

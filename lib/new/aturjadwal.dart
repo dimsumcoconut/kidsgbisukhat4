@@ -211,12 +211,11 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
               style: TextStyle(fontSize: 20, color: Colors.white)),
           centerTitle: false,
         ),
-        body: SingleChildScrollView(
-          child: Form(
+        body:Form(
             key: formKey,
             child: ListView(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              // physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.all(15),
               children: [
                 TextFormField(
@@ -379,6 +378,6 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
               ],
             ),
           ),
-        ));
+        );
   }
 }

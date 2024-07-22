@@ -1,63 +1,16 @@
-// class _MonthPickerScreenState extends State<MonthPickerScreen> {
-//   DateTime? _selected;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Month Picker Example'),
-//       ),
-//       body: Form(
-
-//         child: TextFormField(
-//   validator: value.isEmpty ? 'this field is required' : null,
-//   readOnly: true,
-//   style: TextStyle(fontSize: 13.0),
-//   decoration: InputDecoration(
-//     hintStyle: TextStyle(fontSize: 13.0),
-//     hintText: 'Pick Year',
-//     contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-//     border: OutlineInputBorder(),
-//     suffixIcon: Icon(Icons.calendar_today),
-//   ),
-//   onTap: () => handleReadOnlyInputClick(context),
-// )
-
-// void handleReadOnlyInputClick(context) {
-//   showBottomSheet(
-//       context: context,
-//       builder: (BuildContext context) => Container(
-//         width: MediaQuery.of(context).size.width,
-//         child: YearPicker(
-//           selectedDate: DateTime(1997),
-//           firstDate: DateTime(1995),
-//           lastDate: DateTime.now(),
-//           onChanged: (val) {
-//             print(val);
-//             Navigator.pop(context);
-//           },
-//         ),
-//     )
-//   );
-// },
-//       )
-//     );
-//   }
-// }
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kidsgbisukhat4/consts.dart';
 
-class Time extends StatefulWidget {
+class Add_Bahan extends StatefulWidget {
   @override
-  _TimeState createState() => _TimeState();
+  _Add_BahanState createState() => _Add_BahanState();
 }
 
-class _TimeState extends State<Time> with SingleTickerProviderStateMixin {
+class _Add_BahanState extends State<Add_Bahan> with SingleTickerProviderStateMixin {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController bulanController= TextEditingController();
+  final TextEditingController bulanController = TextEditingController();
   final TextEditingController bahanController = TextEditingController();
   final TextEditingController keteranganController = TextEditingController();
   bool isLoadingSave = false;
@@ -79,21 +32,21 @@ class _TimeState extends State<Time> with SingleTickerProviderStateMixin {
     });
   }
 
-  final CollectionReference collectionIzin =
+  final CollectionReference collectionbahan =
       FirebaseFirestore.instance.collection('bahan');
 
-  createData(dynamic izin) async {
+  createData(dynamic bahan) async {
     String message = '';
     dynamic data;
     StatusType status;
     try {
-      await collectionIzin.add(izin).then(
+      await collectionbahan.add(bahan).then(
         (value) {
-          izin['id'] = value.id;
-          collectionIzin.doc(value.id).set(izin);
+          bahan['id'] = value.id;
+          collectionbahan.doc(value.id).set(bahan);
         },
       );
-      data = izin;
+      data = bahan;
       status = StatusType.success;
       message = 'Tambah Bahan Sukses';
     } catch (e) {
@@ -133,6 +86,7 @@ class _TimeState extends State<Time> with SingleTickerProviderStateMixin {
               setState(() {
                 _selectedMonth = dateTime;
               });
+              bulanController.text = DateFormat.yMMMM().format(_selectedMonth);
             },
             style: TextButton.styleFrom(
               backgroundColor: Colors.amber,
@@ -175,20 +129,20 @@ class _TimeState extends State<Time> with SingleTickerProviderStateMixin {
         child: ListView(
           padding: const EdgeInsets.all(10),
           children: [
-            //  TextFormField(
-            //   controller: bulanController,
-            //   decoration: const InputDecoration(
-            //       border: OutlineInputBorder(),
-            //       label: Text('Klik Tombol Di Bawah')),
-                  
-            //   keyboardType: TextInputType.streetAddress,
-            //   validator: (value) {
-            //     if (value!.isEmpty || value == '') {
-            //       return 'Harap Diisi.';
-            //     }
-            //     return null;
-            //   },
-            // ),
+            TextFormField(
+              controller: bulanController,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(), label: Text('Bulan')),
+              onTap: switchPicker,
+
+              // keyboardType: TextInputType.streetAddress,
+              validator: (value) {
+                if (value!.isEmpty || value == '') {
+                  return 'Harap Diisi.';
+                }
+                return null;
+              },
+            ),
             Material(
               color: Theme.of(context).cardColor,
               child: AnimatedSize(
@@ -236,27 +190,6 @@ class _TimeState extends State<Time> with SingleTickerProviderStateMixin {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(DateFormat.yMMMM().format(_selectedMonth)),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                ),
-                onPressed: switchPicker,
-                child: Text(
-                  'Pilih Bulan',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            
             const SizedBox(
               height: 10,
             ),
@@ -306,14 +239,14 @@ class _TimeState extends State<Time> with SingleTickerProviderStateMixin {
                             });
                             Response response;
 
-                            Map<String, dynamic> izin = {
-                              'bulan': Timestamp.fromDate(dateTime!),
+                            Map<String, dynamic> bahan = {
+                              'bulan': Timestamp.fromDate(_selectedMonth!),
                               'bahan': bahanController.text,
                               'keterangan': keteranganController.text,
                               'created_at': Timestamp.now(),
                               'updated_at': Timestamp.now(),
                             };
-                            response = await createData(izin);
+                            response = await createData(bahan);
                             setState(() {
                               isLoadingSave = false;
                             });
@@ -322,7 +255,7 @@ class _TimeState extends State<Time> with SingleTickerProviderStateMixin {
                               Navigator.of(context).pop();
                               // } else {
                               //   bulanController.clear();
-                              //   tanggalIzinController.clear();
+                              //   tanggalbahanController.clear();
                               // }
 
                               var snackBar = SnackBar(

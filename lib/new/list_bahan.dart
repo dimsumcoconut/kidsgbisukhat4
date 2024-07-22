@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kidsgbisukhat4/new/addbahan.dart';
-import 'package:kidsgbisukhat4/new/contoh.dart';
+import 'package:kidsgbisukhat4/new/add_bahan.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -76,7 +76,7 @@ class _BahanPageState extends State<BahanPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>   Time(),
+                    builder: (context) => Add_Bahan(),
                   ),
                 );
               },
@@ -104,6 +104,9 @@ class _BahanPageState extends State<BahanPage> {
               itemBuilder: (context, index) {
                 Map<String, dynamic> bahan = snapshot.data![index];
                 return ListTile(
+                  // onTap: () {
+                  //   //ini kemna?
+                  // },
                   title: Text(
                       '${DateFormat('MMMM - yyyy', 'id_ID').format(bahan['bulan'].toDate())}',
                       style: const TextStyle(

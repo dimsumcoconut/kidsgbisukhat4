@@ -27,21 +27,21 @@ class _AddBahanState extends State<AddBahan> {
 
   DateTime? dateTime;
 
-  final CollectionReference collectionIzin =
+  final CollectionReference collectionbahan =
       FirebaseFirestore.instance.collection('bahan');
 
-  createData(dynamic izin) async {
+  createData(dynamic bahan) async {
     String message = '';
     dynamic data;
     StatusType status;
     try {
-      await collectionIzin.add(izin).then(
+      await collectionbahan.add(bahan).then(
         (value) {
-          izin['id'] = value.id;
-          collectionIzin.doc(value.id).set(izin);
+          bahan['id'] = value.id;
+          collectionbahan.doc(value.id).set(bahan);
         },
       );
-      data = izin;
+      data = bahan;
       status = StatusType.success;
       message = 'Tambah Bahan Sukses';
     } catch (e) {
@@ -154,14 +154,14 @@ class _AddBahanState extends State<AddBahan> {
                             });
                             Response response;
 
-                            Map<String, dynamic> izin = {
+                            Map<String, dynamic> bahan = {
                               'bulan': Timestamp.fromDate(dateTime!),
                               'bahan': bahanController.text,
                               'keterangan': keteranganController.text,
                               'created_at': Timestamp.now(),
                               'updated_at': Timestamp.now(),
                             };
-                            response = await createData(izin);
+                            response = await createData(bahan);
                             setState(() {
                               isLoadingSave = false;
                             });
@@ -170,7 +170,7 @@ class _AddBahanState extends State<AddBahan> {
                               Navigator.of(context).pop();
                               // } else {
                               //   bulanController.clear();
-                              //   tanggalIzinController.clear();
+                              //   tanggalbahanController.clear();
                               // }
 
                               var snackBar = SnackBar(

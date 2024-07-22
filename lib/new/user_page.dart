@@ -150,30 +150,30 @@ class _UserPageState extends State<UserPage> {
             const SizedBox(
               height: 15,
             ),
-            DropdownButtonFormField(
-              decoration: const InputDecoration(
-                labelText: 'Jabatan',
-                hintText: 'Masukkan Jabatan',
-                floatingLabelAlignment: FloatingLabelAlignment.start,
-                isCollapsed: false,
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                // prefixIcon: const Icon(Icons.menu_rounded),
-                border: OutlineInputBorder(),
-              ),
-              items: const [
-                DropdownMenuItem(
-                  value: 'Guru',
-                  child: Text(
-                    "Guru",
-                  ),
-                ),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  jabatan = value;
-                });
-              },
-            ),
+            // DropdownButtonFormField(
+            //   decoration: const InputDecoration(
+            //     labelText: 'Jabatan',
+            //     hintText: 'Masukkan Jabatan',
+            //     floatingLabelAlignment: FloatingLabelAlignment.start,
+            //     isCollapsed: false,
+            //     floatingLabelBehavior: FloatingLabelBehavior.always,
+            //     // prefixIcon: const Icon(Icons.menu_rounded),
+            //     border: OutlineInputBorder(),
+            //   ),
+            //   items: const [
+            //     DropdownMenuItem(
+            //       value: 'Guru',
+            //       child: Text(
+            //         "Guru",
+            //       ),
+            //     ),
+            //   ],
+            //   onChanged: (value) {
+            //     setState(() {
+            //       jabatan = value;
+            //     });
+            //   },
+            // ),
             const SizedBox(
               height: 15,
             ),
@@ -194,7 +194,7 @@ class _UserPageState extends State<UserPage> {
                             Map<String, dynamic> user = {
                               'nama': nameController.text,
                               'email': emailController.text,
-                              'jabatan': jabatan,
+                              'jabatan': "Guru",
                               'no_hp': noHpController.text,
                               'tanggal_lahir': Timestamp.fromDate(dateTime!),
                               'password':

@@ -67,7 +67,6 @@ class _AddBeritaState extends State<AddBerita> {
       body: Form(
         key: formKey,
         child: ListView(
-          padding: const EdgeInsets.all(10),
           children: [
             TextFormField(
               controller: beritaController,

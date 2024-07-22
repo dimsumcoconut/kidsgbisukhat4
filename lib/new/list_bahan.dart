@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'package:kidsgbisukhat4/new/addbahan.dart';
+import 'package:kidsgbisukhat4/new/contoh.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class BahanPage extends StatefulWidget {
@@ -75,7 +76,7 @@ class _BahanPageState extends State<BahanPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AddBahan(),
+                    builder: (context) =>   Time(),
                   ),
                 );
               },

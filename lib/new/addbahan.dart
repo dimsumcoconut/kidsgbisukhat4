@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import 'package:kidsgbisukhat4/consts.dart';
+// import 'package:mat_month_picker_dialog/mat_month_picker_dialog.dart';
 
 class AddBahan extends StatefulWidget {
   final dynamic user;
@@ -21,6 +23,8 @@ class _AddBahanState extends State<AddBahan> {
   Map<String, dynamic>? user;
   List<Map<String, dynamic>> listUser = [];
   bool isLoadingSave = false;
+  // DateTime? _selected;
+
   DateTime? dateTime;
 
   final CollectionReference collectionIzin =
@@ -69,7 +73,8 @@ class _AddBahanState extends State<AddBahan> {
         child: ListView(
           padding: const EdgeInsets.all(10),
           children: [
-              TextFormField(
+            SizedBox(height: 10),
+            TextFormField(
               controller: bulanController,
               readOnly: true,
               decoration: const InputDecoration(
@@ -106,7 +111,8 @@ class _AddBahanState extends State<AddBahan> {
             TextFormField(
               controller: bahanController,
               decoration: const InputDecoration(
-                  border: OutlineInputBorder(), label: Text('Link Google Drive')),
+                  border: OutlineInputBorder(),
+                  label: Text('Link Google Drive')),
               keyboardType: TextInputType.streetAddress,
               validator: (value) {
                 if (value!.isEmpty || value == '') {
@@ -196,7 +202,7 @@ class _AddBahanState extends State<AddBahan> {
                               )
                             : const Text('Tambah Bahan'))),
               ],
-            )
+            ),
           ],
         ),
       ),

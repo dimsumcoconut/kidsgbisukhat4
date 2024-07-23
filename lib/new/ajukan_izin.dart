@@ -134,12 +134,16 @@ class _AjukanIzinPageState extends State<AjukanIzinPage> {
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), label: Text('Tanggal Izin')),
               onTap: () {
-                showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2099),
-                ).then((pickedDate) {
+                 showDatePicker(
+                        context: context,
+                        // initialDate: pickedDate,
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2100),
+                        selectableDayPredicate: (DateTime date) {
+                          // Hanya izinkan hari Minggu yang dapat dipilih
+                          return date.weekday == DateTime.sunday;
+                        },
+                      ).then((pickedDate) {
                   if (pickedDate != null) {
                     setState(() {
                       dateTime = pickedDate;

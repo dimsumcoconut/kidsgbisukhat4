@@ -120,8 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "Silakan Login",
-                            style: TextStyle(
-                              fontSize: 15, color: Colors.black),
+                            style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                         ),
                       ],
@@ -184,12 +183,16 @@ class _LoginPageState extends State<LoginPage> {
                                   color: Color.fromARGB(255, 0, 0, 0))),
                           focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black)),
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.lock,
                             color: Color.fromARGB(255, 0, 0, 0),
                             size: 18,
                           ),
-                          label: const Text('Password'),
+                          label: const Text('Password',
+                              style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                              fontSize: 16)),
                           suffixIcon: IconButton(
                               onPressed: () {
                                 seePassword = !seePassword;
@@ -218,9 +221,9 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Expanded(
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.black,
-                              ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black,
+                                ),
                                 onPressed: () async {
                                   if (formKey.currentState!.validate()) {
                                     setState(() {

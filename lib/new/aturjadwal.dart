@@ -241,15 +241,15 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
                         // print(formattedDate);
                         cekAvailableUser();
                         tanggalJadwalController.text = formattedDate;
-                        // String formatNamaHari =
-                        //     DateFormat('EEEE', 'id_ID').format(pickedDate);
-                        // String formatNamaBulan =
-                        //     DateFormat('MMMM', 'id_ID').format(pickedDate);
-                        // String ke =
-                        //     DateFormat('dd', 'id_ID').format(pickedDate);
+                        String formatNamaHari =
+                            DateFormat('EEEE', 'id_ID').format(pickedDate);
+                        String formatNamaBulan =
+                            DateFormat('MMMM', 'id_ID').format(pickedDate);
+                        String ke =
+                            DateFormat('dd', 'id_ID').format(pickedDate);
 
-                        // namaJadwalController.text =
-                        //     '${formatNamaHari} ke-${(int.parse(ke) ~/ 6)} ${formatNamaBulan} ${DateFormat('yyyy', 'id_ID').format(pickedDate)}';
+                        namaJadwalController.text =
+                            '${formatNamaHari} ke-${(int.parse(ke) ~/ 7)} ${formatNamaBulan} ${DateFormat('yyyy', 'id_ID').format(pickedDate)}';
                       });
                     }
                   });

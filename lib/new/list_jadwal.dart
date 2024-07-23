@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 import 'package:kidsgbisukhat4/new/aturjadwal.dart';
+import 'package:kidsgbisukhat4/new/contoh2.dart';
 import 'package:kidsgbisukhat4/new/detailjadwal.dart';
 
 class ListJadwalPage extends StatefulWidget {
@@ -105,7 +106,7 @@ class _ListJadwalPageState extends State<ListJadwalPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AturJadwalPage(),
+                    builder: (context) => WeekOfMonthExample(),
                   ),
                 );
               },

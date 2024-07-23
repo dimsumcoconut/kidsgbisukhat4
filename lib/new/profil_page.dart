@@ -62,6 +62,8 @@ class _ProfilePageState extends State<ProfilePage> {
     return Response(data: null, status: status, message: message);
   }
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,58 +74,83 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(fontSize: 20, color: Colors.white)),
         centerTitle: false,
       ),
-      body: Column(
-        children: [
-          const SizedBox(width: 90),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20, left: 1),
-            child: Row(children: [
-              const SizedBox(width: 15),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(width: 90),
+            dataUser.isNotEmpty
+                ? ListTile(
+                    title: Text(dataUser['nama']),
+                    leading: const Icon(Icons.person),
+                  )
+                : SizedBox.shrink(),
+            dataUser.isNotEmpty
+                ? ListTile(
+                    title: Text(dataUser['email']),
+                    leading: const Icon(Icons.email),
+                  )
+                : SizedBox.shrink(),
+            dataUser.isNotEmpty
+                ? ListTile(
+                    title: Text(dataUser['jabatan']),
+                    leading: const Icon(Icons.group),
+                  )
+                : SizedBox.shrink(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 5),
-                    child: Text(
-                      "Nama: " + dataUser['nama'],
-                      style: TextStyle(fontSize: 15, color: Colors.black),
-                    ),
-                  ),
-                  Text(
-                    // ignore: prefer_interpolation_to_compose_strings
-                    "Email: " + dataUser['email'],
-                    style: const TextStyle(
-                        fontSize: 15,
-                        color: Color.fromARGB(255, 172, 172, 172)),
-                  ),
+                  Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                          ),
+                          onPressed: () async {
+                            Response response = await logout();
+                            if (response.status == StatusType.success) {
+                              if (context.mounted) {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()),
+                                  (route) => false,
+                                );
+                              }
+                            }
+                            if (context.mounted) {
+                              var snackBar = SnackBar(
+                                behavior: SnackBarBehavior.floating,
+                                content: Text(response.message!),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                          },
+                          child: isLoading
+                              ? const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Center(
+                                      child: SizedBox(
+                                        width: 14,
+                                        height: 14,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 14),
+                                    Text('Loading...')
+                                  ],
+                                )
+                              : const Text('Login'))),
                 ],
               ),
-            ]),
-          ),
-          ListTile(
-            onTap: () async {
-              Response response = await logout();
-              if (response.status == StatusType.success) {
-                if (context.mounted) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
-                    (route) => false,
-                  );
-                }
-              }
-              if (context.mounted) {
-                var snackBar = SnackBar(
-                  behavior: SnackBarBehavior.floating,
-                  content: Text(response.message!),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              }
-            },
-            title: const Text('Logout'),
-            trailing: const Icon(Icons.arrow_forward_ios_rounded),
-          )
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

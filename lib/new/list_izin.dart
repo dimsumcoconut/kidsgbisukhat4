@@ -127,7 +127,7 @@ class _ListIzinPageState extends State<ListIzinPage> {
                               children: [
                                 Text(
                                   izin['user']['nama'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -138,7 +138,7 @@ class _ListIzinPageState extends State<ListIzinPage> {
                               ],
                             ),
                           ),
-                          Icon(Icons.arrow_forward_ios_rounded)
+                          const Icon(Icons.arrow_forward_ios_rounded)
                         ],
                       ),
                     ),

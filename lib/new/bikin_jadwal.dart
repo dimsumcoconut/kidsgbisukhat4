@@ -5,12 +5,12 @@ import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 import 'package:kidsgbisukhat4/consts.dart';
 
-class WeekOfMonthExample extends StatefulWidget {
+class BikinJadwal extends StatefulWidget {
   @override
-  _WeekOfMonthExampleState createState() => _WeekOfMonthExampleState();
+  _BikinJadwalState createState() => _BikinJadwalState();
 }
 
-class _WeekOfMonthExampleState extends State<WeekOfMonthExample> {
+class _BikinJadwalState extends State<BikinJadwal> {
   final TextEditingController tanggalJadwalController = TextEditingController();
   final TextEditingController namaJadwalController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -31,7 +31,7 @@ class _WeekOfMonthExampleState extends State<WeekOfMonthExample> {
   List<dynamic> listNotAvailableUsers = [];
   //mendapatkan user yg izin
   final CollectionReference collectionIzin =
-      FirebaseFirestore.instance.collection('izins');
+      FirebaseFirestore.instance.collection('izin');
 //mendapatkan tugas
   final CollectionReference collectionTugas =
       FirebaseFirestore.instance.collection('tugass');
@@ -200,8 +200,11 @@ class _WeekOfMonthExampleState extends State<WeekOfMonthExample> {
     }
   }
 
-  DateTime pickedDate =
-      DateTime(2024, 7, 28); // Default example date: 28th July 2024
+DateTime pickedDate =
+      DateTime.now(); // Default example date: 28th July 2024
+
+  // DateTime pickedDate =
+  //     DateTime(2024, 7, 28); // Default example date: 28th July 2024
 
   @override
   void initState() {
@@ -247,10 +250,10 @@ class _WeekOfMonthExampleState extends State<WeekOfMonthExample> {
       body: Form(
         key: formKey,
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(8),
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(6.0),
               child: Column(
                 children: [
                   TextFormField(
@@ -261,7 +264,7 @@ class _WeekOfMonthExampleState extends State<WeekOfMonthExample> {
                     onTap: () {
                       showDatePicker(
                         context: context,
-                        initialDate: pickedDate,
+                        // initialDate: pickedDate,
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2100),
                         selectableDayPredicate: (DateTime date) {
@@ -475,7 +478,3 @@ class _WeekOfMonthExampleState extends State<WeekOfMonthExample> {
     );
   }
 }
-
-void main() => runApp(MaterialApp(
-      home: WeekOfMonthExample(),
-    ));

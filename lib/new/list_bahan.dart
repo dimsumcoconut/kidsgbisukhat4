@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kidsgbisukhat4/new/addbahan.dart';
-import 'package:kidsgbisukhat4/new/add_bahan.dart';
+import 'package:kidsgbisukhat4/new/tambahbahan.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,7 +34,7 @@ class _BahanPageState extends State<BahanPage> {
       return collectionbahan.snapshots().map((s) => s.docs.map((e) {
             return {
               'bahan': e['bahan'],
-              'keterangan': e['keterangan'],
+              // 'keterangan': e['keterangan'],
               'bulan': e['bulan'],
             };
           })
@@ -48,7 +47,7 @@ class _BahanPageState extends State<BahanPage> {
       return collectionbahan.snapshots().map((s) => s.docs.map((e) {
             return {
               'bahan': e['bahan'],
-              'keterangan': e['keterangan'],
+              // 'keterangan': e['keterangan'],
               'bulan': e['bulan'],
             };
           })
@@ -76,7 +75,7 @@ class _BahanPageState extends State<BahanPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Add_Bahan(),
+                    builder: (context) => TambahBahan(),
                   ),
                 );
               },

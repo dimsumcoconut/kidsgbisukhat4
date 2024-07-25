@@ -51,6 +51,7 @@ class _DetailJadwalPageState extends State<DetailJadwalPage> {
               height: 18,
             ),
             TextFormField(
+              readOnly: true,
               controller: TextEditingController(text: widget.jadwal['name']),
               decoration: const InputDecoration(
                   border: OutlineInputBorder(), label: Text('Nama')),

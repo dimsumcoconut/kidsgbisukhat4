@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,18 +5,19 @@ import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 import 'package:kidsgbisukhat4/consts.dart';
 
-class AturJadwalPage extends StatefulWidget {
-  const AturJadwalPage({super.key});
+class JadwalPage extends StatefulWidget {
+  const JadwalPage({super.key});
 
   @override
-  State<AturJadwalPage> createState() => _AturJadwalPageState();
+  _JadwalPageState createState() => _JadwalPageState();
 }
 
-class _AturJadwalPageState extends State<AturJadwalPage> {
+class _JadwalPageState extends State<JadwalPage> {
   final TextEditingController tanggalJadwalController = TextEditingController();
   final TextEditingController namaJadwalController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   DateTime? dateTime;
+
   List<String> tugas = [
     'WL',
     'Singer',
@@ -34,13 +33,16 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
   List<dynamic> listNotAvailableUsers = [];
   //mendapatkan user yg izin
   final CollectionReference collectionIzin =
-      FirebaseFirestore.instance.collection('izins');
+      FirebaseFirestore.instance.collection('izin');
 //mendapatkan tugas
   final CollectionReference collectionTugas =
       FirebaseFirestore.instance.collection('tugass');
   //mendapatkan semua user
   final CollectionReference collectionUser =
       FirebaseFirestore.instance.collection('users');
+
+  // final CollectionReference jadwal =
+  //     FirebaseFirestore.instance.collection('jadwal');
 
   final CollectionReference collectionJadwal =
       FirebaseFirestore.instance.collection('jadwals');
@@ -203,6 +205,49 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
     }
   }
 
+  // DateTime pickedDate = DateTime.now(); // Default example date: 28th July 2024
+
+  // DateTime pickedDate =
+  //     DateTime(2024, 7, 28); // Default example date: 28th July 2024
+
+  @override
+  void initState() {
+    super.initState();
+    // _calculateWeekOfMonth(pickedDate);
+  }
+
+  /// Function to calculate the week of the month
+  int weekOfMonth(DateTime date) {
+    DateTime firstDayOfMonth = DateTime(date.year, date.month, 1);
+    int firstWeekday = firstDayOfMonth.weekday;
+
+    // Calculate the difference between the first weekday and Monday (1)
+    int offset = firstWeekday - DateTime.monday;
+    if (offset < 0) offset += 7; // Adjust if the month starts before Monday
+
+    // Calculate week number
+    int weekNumber = ((date.day + offset - 1) ~/ 7) + 1;
+    return weekNumber;
+  }
+
+  /// Function to format and display the selected date's week information
+  void _calculateWeekOfMonth(DateTime date) {
+    // String formatNamaHari = DateFormat('EEEE', 'id_ID').format(date);
+    String formatNamaBulan = DateFormat('MMMM', 'id_ID').format(date);
+    int weekNum = weekOfMonth(date);
+
+    // Update the text field with the formatted string
+    namaJadwalController.text =
+        'Minggu ke-$weekNum ${formatNamaBulan} ${DateFormat('yyyy', 'id_ID').format(date)}';
+  }
+
+  ///----------------------------------
+  final _formKey = GlobalKey<FormState>();
+  DateTime? _selectedDate;
+  final TextEditingController _descriptionController = TextEditingController();
+  final CollectionReference _jadwalCollection =
+      FirebaseFirestore.instance.collection('jadwal');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -213,47 +258,19 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
             style: TextStyle(fontSize: 20, color: Colors.white)),
         centerTitle: false,
       ),
-      body: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
           child: Column(
-            // physics: const NeverScrollableScrollPhysics(),
-            children: [
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
               TextFormField(
                 controller: tanggalJadwalController,
                 readOnly: true,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(), label: Text('Tanggal')),
-                onTap: () {
-                  showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2099),
-                  ).then((pickedDate) {
-                    if (pickedDate != null) {
-                      setState(() {
-                        dateTime = pickedDate;
-                        String formattedDate =
-                            DateFormat('EEEE, dd-MMM-yyyy', 'id_ID')
-                                .format(pickedDate);
-                        // print(formattedDate);
-                        cekAvailableUser();
-                        tanggalJadwalController.text = formattedDate;
-                        String formatNamaHari =
-                            DateFormat('EEEE', 'id_ID').format(pickedDate);
-                        String formatNamaBulan =
-                            DateFormat('MMMM', 'id_ID').format(pickedDate);
-                        String ke =
-                            DateFormat('dd', 'id_ID').format(pickedDate);
-
-                        namaJadwalController.text =
-                            '${formatNamaHari} ke-${(int.parse(ke) ~/ 7)} ${formatNamaBulan} ${DateFormat('yyyy', 'id_ID').format(pickedDate)}';
-                      });
-                    }
-                  });
-                },
+                onTap: () => _selectDate(context),
                 validator: (value) {
                   if (value!.isEmpty || value == '') {
                     return 'Masukkan Tanggal Jadwal';
@@ -261,9 +278,7 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
                   return null;
                 },
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 16.0),
               TextFormField(
                 controller: namaJadwalController,
                 readOnly: true,
@@ -319,79 +334,166 @@ class _AturJadwalPageState extends State<AturJadwalPage> {
                         itemCount: tugas.length)
                     : const Center(child: Text('Pilih Tanggal')),
               ),
-              const SizedBox(
-                height: 15,
+              SizedBox(height: 20),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                      ),
+                      onPressed: _submitJadwal,
+                      child: const Text('Tambahkan Jadwal'),
+                    ),
+                  ),
+                ],
               ),
-              listAvailableUsers.isNotEmpty
-                  ? Row(
-                      children: [
-                        Expanded(
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black,
-                                ),
-                                onPressed: () async {
-                                  if (formKey.currentState!.validate()) {
-                                    setState(() {
-                                      isLoadingSave = true;
-                                    });
-                                    Response? response;
-                                    List<dynamic> details = [];
-                                    for (var i = 0; i < tugas.length; i++) {
-                                      details.add({
-                                        'tugas': tugas[i],
-                                        'user': listAvailableUsers[i],
-                                        'created_at': Timestamp.now(),
-                                      });
-                                    }
-                                    Map<String, dynamic> jadwal = {
-                                      'tanggal': Timestamp.fromDate(dateTime!),
-                                      'name': namaJadwalController.text,
-                                      'details': details,
-                                      'created_at': Timestamp.now(),
-                                    };
-                                    response = await simpanJadwal(jadwal);
-                                    setState(() {
-                                      isLoadingSave = false;
-                                    });
-                                    if (context.mounted) {
-                                      Navigator.of(context).pop();
-
-                                      var snackBar = SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        content: Text(response!.message!),
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
-                                    }
-                                  }
-                                },
-                                child: isLoadingSave
-                                    ? const Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Center(
-                                            child: SizedBox(
-                                              width: 14,
-                                              height: 14,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(width: 14),
-                                          Text('Loading...')
-                                        ],
-                                      )
-                                    : const Text('Simpan'))),
-                      ],
-                    )
-                  : const SizedBox.shrink()
+              const SizedBox(height: 16.0),
+              Expanded(child: _buildJadwalList()),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    showDatePicker(
+      context: context,
+      // initialDate: pickedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      selectableDayPredicate: (DateTime date) {
+        // Hanya izinkan hari Minggu yang dapat dipilih
+        return date.weekday == DateTime.sunday;
+      },
+    ).then((pickedDate) {
+      if (pickedDate != null) {
+        setState(() {
+          dateTime = pickedDate;
+          _calculateWeekOfMonth(pickedDate);
+
+          String formattedDate =
+              DateFormat('EEEE, dd-MMM-yyyy', 'id_ID').format(pickedDate);
+          // print(formattedDate);
+          cekAvailableUser();
+          tanggalJadwalController.text = formattedDate;
+        });
+      }
+    });
+  }
+
+  Future<void> _submitJadwal() async {
+    if (_formKey.currentState!.validate()) {
+      // if (_selectedDate == null) {
+      //   return;
+      // }
+      setState(() {
+        isLoadingSave = true;
+      });
+
+      Response? response;
+      List<dynamic> details = [];
+      for (var i = 0; i < tugas.length; i++) {
+        details.add({
+          'tugas': tugas[i],
+          'user': listAvailableUsers[i],
+          'created_at': Timestamp.now(),
+        });
+      }
+
+      // Konversi ke timestamp
+      final timestamp = Timestamp.fromDate(dateTime!);
+
+      // Cek apakah tanggal sudah ada di Firestore
+      final querySnapshot =
+          await collectionJadwal.where('tanggal', isEqualTo: timestamp).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        _showPeringatan();
+      } else {
+        // Jika belum ada, tambahkan ke Firestore
+        Map<String, dynamic> jadwal = {
+          'tanggal': Timestamp.fromDate(dateTime!),
+          'name': namaJadwalController.text,
+          'details': details,
+          'created_at': Timestamp.now(),
+        };
+        response = await simpanJadwal(jadwal);
+        setState(() {
+          isLoadingSave = false;
+        });
+        if (context.mounted) {
+          Navigator.of(context).pop();
+
+          var snackBar = SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text(response!.message!),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+
+        _descriptionController.clear();
+        setState(() {
+          _selectedDate = null;
+        });
+      }
+    }
+  }
+
+  void _showPeringatan() {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Peringatan'),
+          content: const Text(
+              'Jadwal sudah dibuat.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
+  Widget _buildJadwalList() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _jadwalCollection.snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final documents = snapshot.data!.docs;
+        return ListView.builder(
+          itemCount: documents.length,
+          itemBuilder: (context, index) {
+            final data = documents[index].data() as Map<String, dynamic>;
+            final Timestamp timestamp = data['tanggal'] as Timestamp;
+            final DateTime date = timestamp.toDate();
+            final namaJadwalController = data['deskripsi'] as String;
+
+            return ListTile(
+              title: Text(namaJadwalController),
+              subtitle: Text(
+                  'Tanggal: ${date.day.toString().padLeft(2, '0')}-${date.month.toString().padLeft(2, '0')}-${date.year}'),
+            );
+          },
+        );
+      },
     );
   }
 }

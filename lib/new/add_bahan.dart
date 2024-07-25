@@ -8,7 +8,8 @@ class Add_Bahan extends StatefulWidget {
   _Add_BahanState createState() => _Add_BahanState();
 }
 
-class _Add_BahanState extends State<Add_Bahan> with SingleTickerProviderStateMixin {
+class _Add_BahanState extends State<Add_Bahan>
+    with SingleTickerProviderStateMixin {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController bulanController = TextEditingController();
   final TextEditingController bahanController = TextEditingController();

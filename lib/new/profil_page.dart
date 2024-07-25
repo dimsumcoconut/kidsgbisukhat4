@@ -32,7 +32,6 @@ class _ProfilePageState extends State<ProfilePage> {
   showSnackBar(String message) {
     final snackBar = SnackBar(
       content: Text(message),
-      backgroundColor: Colors.deepOrange,
       action: SnackBarAction(
         label: 'Tutup',
         onPressed: () {},
@@ -97,58 +96,29 @@ class _ProfilePageState extends State<ProfilePage> {
                     leading: const Icon(Icons.group),
                   )
                 : SizedBox.shrink(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                          ),
-                          onPressed: () async {
-                            Response response = await logout();
-                            if (response.status == StatusType.success) {
-                              if (context.mounted) {
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const LoginPage()),
-                                  (route) => false,
-                                );
-                              }
-                            }
-                            if (context.mounted) {
-                              var snackBar = SnackBar(
-                                behavior: SnackBarBehavior.floating,
-                                content: Text(response.message!),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            }
-                          },
-                          child: isLoading
-                              ? const Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Center(
-                                      child: SizedBox(
-                                        width: 14,
-                                        height: 14,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 14),
-                                    Text('Loading...')
-                                  ],
-                                )
-                              : const Text('Login'))),
-                ],
-              ),
-            ),
+            ListTile(
+            onTap: () async {
+              Response response = await logout();
+              if (response.status == StatusType.success) {
+                if (context.mounted) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                    (route) => false,
+                  );
+                }
+              }
+              if (context.mounted) {
+                var snackBar = SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Text(response.message!),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+            },
+            title: const Text('Logout'),
+            trailing: const Icon(Icons.arrow_forward_ios_rounded),
+          )
           ],
         ),
       ),

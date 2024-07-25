@@ -200,8 +200,7 @@ class _BikinJadwalState extends State<BikinJadwal> {
     }
   }
 
-DateTime pickedDate =
-      DateTime.now(); // Default example date: 28th July 2024
+  DateTime pickedDate = DateTime.now(); // Default example date: 28th July 2024
 
   // DateTime pickedDate =
   //     DateTime(2024, 7, 28); // Default example date: 28th July 2024
@@ -316,7 +315,7 @@ DateTime pickedDate =
                   ),
                   TextFormField(
                     controller: namaJadwalController,
-                    // readOnly: true,
+                    readOnly: true,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(), label: Text('Nama')),
                     keyboardType: TextInputType.streetAddress,

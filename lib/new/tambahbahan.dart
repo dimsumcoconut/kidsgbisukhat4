@@ -64,9 +64,9 @@ class _TambahBahanState extends State<TambahBahan> {
               // backgroundColor: Colors.amber,
               shape: CircleBorder(),
             ),
-            child: Text(
-              DateFormat('MMM').format(dateTime),
-            ),
+            child: Text(DateFormat('MMM').format(dateTime),
+                style: TextStyle(
+                  color: Colors.black)),
           ),
         ),
       );
@@ -76,16 +76,35 @@ class _TambahBahanState extends State<TambahBahan> {
 
   List<Widget> generateMonths() {
     return [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: generateRowOfMonths(1, 6),
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: generateRowOfMonths(1, 12),
+        ),
       ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: generateRowOfMonths(7, 12),
-      ),
+      // SingleChildScrollView(
+      //   scrollDirection: Axis.horizontal,
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //     children: generateRowOfMonths(7, 12),
+      //   ),
+      // ),
     ];
   }
+
+  // List<Widget> generateMonths() {
+  //   return [
+  //     Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //       children: generateRowOfMonths(1, 6),
+  //     ),
+  //     Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //       children: generateRowOfMonths(7, 12),
+  //     ),
+  //   ];
+  // }
 
   @override
   Widget build(BuildContext context) {

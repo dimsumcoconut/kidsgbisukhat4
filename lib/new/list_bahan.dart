@@ -72,12 +72,7 @@ class _BahanPageState extends State<BahanPage> {
       floatingActionButton: widget.user['jabatan'] == 'Admin'
           ? FloatingActionButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TambahBahan(),
-                  ),
-                );
+                
               },
               child: const Icon(Icons.add),
             )

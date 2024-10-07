@@ -80,56 +80,19 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(top: 100),
           child: Form(
             key: formKey,
             child: Column(children: [
-              const Padding(
-                padding: EdgeInsets.only(right: 25, left: 25, top: 80),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Shallom,",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ),
-                        ),
-                      ],
+               Container(
+                      alignment: Alignment.center,
+                      child: const Text(
+                        "Shallom, silakan login",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 1),
-              const Padding(
-                padding: EdgeInsets.only(right: 25, left: 25),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Silakan Login",
-                            style: TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
               const SizedBox(
-                height: 100,
+                height: 10,
               ),
               Container(
                 padding:
@@ -190,9 +153,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           label: const Text('Password',
                               style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              color: Colors.black,
-                              fontSize: 16)),
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                  fontSize: 16)),
                           suffixIcon: IconButton(
                               onPressed: () {
                                 seePassword = !seePassword;
